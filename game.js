@@ -73,7 +73,7 @@ function Game() {
     render(map, entities, bridges, score);
   }
 
-  setInterval(update, 100);
+  setInterval(update, 1000/60);
 };
 
 function onBridge(bridges, x, y) {
@@ -93,7 +93,7 @@ function Human() {
   var human = Object.create(Entity);
   human.score = Math.floor(Math.random() * 10);
   human.type = 'human';
-  human.speed = 0.2;
+  human.speed = 0.02;
   var versions = Object.keys(types.humans);
   human.version = types.humans[versions[Math.floor(Math.random() * 11)]];
   return human;
@@ -102,7 +102,7 @@ function Human() {
 function Zombie() {
   var zombie = Object.create(Entity);
   zombie.score = -10;
-  zombie.speed = 0.1;
+  zombie.speed = 0.01;
   zombie.type = 'zombie';
   zombie.version = types.zombies.regular;
   return zombie;
