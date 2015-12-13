@@ -30,6 +30,7 @@ export default {
   },
   [LADDER]: {
     solid: false,
+    isLadder: true,
     sprite: { x: 8, y: 0 }
   },
   [GRASS_LEFT]: {
