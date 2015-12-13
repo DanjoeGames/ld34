@@ -6,6 +6,7 @@ export default {
   creditCard: {
     sprite: defineSprite(0, 2),
     name: 'Credit Card',
+    description: '2x multiplier',
     apply: function(player, state) {
       state.scoreMultipliers.push({ value: 2 });
     }
@@ -13,9 +14,9 @@ export default {
   redbull: {
     sprite: defineSprite(1, 2),
     name: 'Energy Drink',
+    description: 'Speed humans up!',
     apply: function(player, state) {
       state.entities.forEach(entity => {
-        // speed all humans up
         if(entity.name != 'Zombie') {
           entity.speed += 0.1;
         }
@@ -25,6 +26,7 @@ export default {
   phone: {
     sprite: defineSprite(2, 2),
     name: 'Mobile Phone',
+    description: 'x10 score',
     apply: function(player, state) {
       // increase this player's score by 10x
       player.score *= 10;
@@ -33,6 +35,7 @@ export default {
   jackpot: {
     sprite: defineSprite(3, 2),
     name: 'Jackpot',
+    description: 'What fine fellows!',
     apply: function(player, state) {
       state.entities.forEach(entity => {
         // turn all entities into gentlemen
@@ -43,12 +46,14 @@ export default {
   burger: {
     sprite: defineSprite(4, 2),
     name: 'Burger',
+    description: 'Does burger all.',
     apply: function(player, state) {
     }
   },
   icecream: {
     sprite: defineSprite(5, 2),
     name: 'Brainfreeze',
+    description: 'Slows all zombies',
     apply: function(player, state) {
       state.entities.forEach(entity => {
         // slow all zombies

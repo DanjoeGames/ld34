@@ -3,6 +3,7 @@ import tiles from './models/tiles';
 import tiletypes from './constants/tiles';
 
 import status from './ui/status';
+import menu from './ui/menu';
 
 const spritesheet = new Image();
 spritesheet.src = 'assets/sprites.png';
@@ -33,6 +34,8 @@ export default function Renderer(width, height, tilesize, getElement) {
   container.appendChild(fg.canvas);
 
   container.appendChild(status.create());
+  // menu isn't working
+  //container.appendChild(menu.create());
 
   container.style.position = 'relative';
   bg.canvas.style.backgroundImage = 'url(assets/background.png)';
@@ -82,19 +85,14 @@ export default function Renderer(width, height, tilesize, getElement) {
       }
     });
 
-    c.font = `10px Purisa`;
-    c.fillText("Level: " + state.currentLevel, 10, 10);
-    c.fillText("Points: " + state.points, 100, 10);
-    c.fillText("x: " + (state.scoreMultipliers.map(m => m.value)).join('*'), 200, 10);
-
     state.texts.forEach(text => {
       if(text.dead) return;
 
       c.font = `${text.size}px Purisa`;
+      c.textAlign = 'center';
       c.lineColor = 'black';
       c.fillStyle = text.color;
       c.fillText(text.text, text.x * ts, (text.y * ts) - (10 - text.age));
-      c.font = `${text.size}px Purisa`;
       c.strokeText(text.text, text.x * ts, (text.y * ts) - (10 - text.age));
       text.age -= 1;
 

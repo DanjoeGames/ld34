@@ -16,6 +16,11 @@ export default function Element(name, attrs={}, children=[]) {
     element.appendChild(child);
   });
 
+  // convenience method for adding events
+  element.on = (name, callback) => {
+    element.addEventListener(name, callback);
+  };
+
   return element;
 }
 
