@@ -59,22 +59,13 @@ export default function Renderer(width, height, tilesize, getElement) {
       drawSprite(entity.sprite.x, entity.sprite.y)
         (c, entity.x, entity.y);
     });
-
-    state.bridges.forEach(bridge => {
-      if(!bridge.extended) return;
-
-      const sprite = tiles[tiletypes.BRIDGE].sprite;
-      const draw = drawSprite(sprite.x, sprite.y);
-
-      for(let i = 0; i < bridge.length; i++) {
-        draw(c, bridge.x + i, bridge.y);
-      }
-    });
   }
 
   function background(state) {
     const c = bg.context;
     const ts = tilesize;
+
+    c.clearRect(0, 0, width, height);
 
     state.map.forEach((row, x) => {
       row.forEach((type, y) => {

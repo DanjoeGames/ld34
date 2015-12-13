@@ -14,16 +14,15 @@ const tilesize = 50;
 const width = map.length * tilesize;
 const height = map[0].length * tilesize;
 
-
 const render = Renderer(width, height, tilesize, () => {
   return document.getElementById('game');
 });
 
 const keyIsDown = KeyboardState();
 
-const leftBridge = Bridge(4, 7, 5);
+const leftBridge = Bridge(4, 7, 5, { extends: 'left' });
 
-const rightBridge = Bridge(4, 16, 5);
+const rightBridge = Bridge(4, 16, 5, { extends: 'right' });
 
 const state = {
   entities: [],
@@ -50,21 +49,25 @@ const rightSpawn = Spawner({
 }).forever();
 
 function update() {
+  if(keyIsDown(controls.LEFT_BRIDGE)) {
+    leftBridge.extend();
+  } else {
+    leftBridge.retract();
+  }
+
+  if(keyIsDown(controls.RIGHT_BRIDGE)) {
+    rightBridge.extend();
+  } else {
+    rightBridge.retract();
+  }
+
+  state.bridges.forEach(bridge => {
+    state.map = bridge.render(state.map);
+  });
+
   state.entities.forEach(entity => {
     const tx = Math.round(entity.x);
     const ty = Math.round(entity.y);
-
-    if(keyIsDown(controls.LEFT_BRIDGE)) {
-      leftBridge.extend();
-    } else {
-      leftBridge.retract();
-    }
-
-    if(keyIsDown(controls.RIGHT_BRIDGE)) {
-      rightBridge.extend();
-    } else {
-      rightBridge.retract();
-    }
 
     const tileBehind = tiles[map[tx][ty]];
 
