@@ -82,6 +82,7 @@ function update() {
       entity.j = 0;
     } else {
       entity.j += 0.1;
+      entity.i = 0;
     }
 
     // apply movement

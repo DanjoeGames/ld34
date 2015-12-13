@@ -1,6 +1,8 @@
 import constants from '../constants/tiles';
 
-const { AIR, GRASS, WATER, STONE, BRIDGE, LADDER } = constants;
+const {
+  AIR, GRASS, GRASS_LEFT, GRASS_RIGHT, WATER, STONE, BRIDGE, LADDER
+} = constants;
 
 export default {
   [AIR]: {
@@ -28,5 +30,13 @@ export default {
     solid: false,
     sprite: { x: 8, y: 0 }
   },
+  [GRASS_LEFT]: {
+    solid: true,
+    sprite: { x: 8, y: 1 }
+  },
+  [GRASS_RIGHT]: {
+    solid: true,
+    sprite: { x: 9, y: 1 }
+  }
 }
 

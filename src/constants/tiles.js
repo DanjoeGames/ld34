@@ -4,6 +4,8 @@ export default {
   WATER: 2,
   STONE: 3,
   BRIDGE: 4,
-  LADDER: 5
+  LADDER: 5,
+  GRASS_LEFT: 6,
+  GRASS_RIGHT: 7
 }
 
