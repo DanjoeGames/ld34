@@ -55,6 +55,12 @@ export default function Renderer(width, height, tilesize, getElement) {
     };
   }
 
+  function drawPlaceholderSprite(c, x, y, fillStyle) {
+    const ts = tilesize;
+    c.fillStyle = fillStyle;
+    c.fillRect(x * ts, y * ts, ts/3, ts/3);
+  }
+
   // all foreground rendering lives here
   function foreground(state) {
     const c = fg.context;
@@ -65,6 +71,10 @@ export default function Renderer(width, height, tilesize, getElement) {
     state.entities.forEach(entity => {
       drawSprite(entity.sprite.x, entity.sprite.y)
         (c, entity.x, entity.y);
+
+      if(entity.name != "zombie" && entity.itemName != "NoItem") {
+        drawPlaceholderSprite(c, entity.x, entity.y, 'blue');
+      }
     });
 
     state.texts.forEach(text => {

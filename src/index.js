@@ -100,6 +100,30 @@ function update() {
       entity.i = 0;
     }
 
+    if(tileBehind.isLadder && !entity.isSafe) {
+      entity.isSafe = true;
+
+      switch(entity.itemName) {
+        case "Jet":
+          state.entities.forEach( entity => {
+            if(entity.name != 'zombie') {
+              entity.speed = entity.speed * 2;
+            }
+          });
+        break;
+        case "BrainFreeze":
+          state.entities.forEach( entity => {
+            if(entity.name == 'zombie') {
+              entity.speed = entity.speed / 2;
+            }
+          });
+        break;
+        case "NoItem":
+        //do nothing in this case
+        break;
+      }
+    }
+
     const tileBelow = tiles[map[tx][ty + 1]];
     if(tileBelow.solid) {
       entity.j = 0;
