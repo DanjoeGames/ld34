@@ -65,6 +65,22 @@ export default function Renderer(width, height, tilesize, getElement) {
       drawSprite(entity.sprite.x, entity.sprite.y)
         (c, entity.x, entity.y);
     });
+
+    state.texts.forEach(text => {
+      if(text.dead) return;
+
+      c.font = `${text.size}px monospace`;
+      c.lineColor = 'black';
+      c.fillStyle = text.color;
+      c.fillText(text.text, text.x * ts, (text.y * ts) - (10 - text.age));
+      c.font = `${text.size}px monospace`;
+      c.strokeText(text.text, text.x * ts, (text.y * ts) - (10 - text.age));
+      text.age -= 1;
+
+      if(text.age <= 0) {
+        text.dead = true;
+      }
+    });
   }
 
   // all background rendering lives here

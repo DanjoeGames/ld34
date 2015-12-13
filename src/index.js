@@ -8,6 +8,7 @@ import Zombie from './entities/zombie';
 import Spawner from './spawner';
 import Entity from './entities';
 import Bridge from './bridge';
+import { FloatingText } from './text';
 import KeyboardState from './input';
 
 const tilesize = 50;
@@ -32,6 +33,7 @@ const rightBridge = Bridge(4, 16, 5, { extends: 'right' });
 const state = {
   entities: [],
   bridges: [leftBridge, rightBridge],
+  texts: [],
   map
 };
 
@@ -79,7 +81,16 @@ function update() {
 
     const tileBehind = tiles[map[tx][ty]];
 
-    if(tileBehind.isLiquid) {
+    if(tileBehind.isLiquid && !entity.drowned) {
+      const negativePoints = - entity.points;
+
+      if(negativePoints >= 0) {
+        state.texts.push(FloatingText('+' + negativePoints,
+              entity.x, entity.y, 30, 'green'));
+      } else {
+        state.texts.push(FloatingText(negativePoints,
+              entity.x, entity.y, 30, 'red'));
+      }
       entity.drowned = true;
       entity.j = 0;
       entity.i = 0;
