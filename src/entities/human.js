@@ -17,7 +17,7 @@ export default function(x, y, i, j) {
 
   human.isSafe = false;
 
-  Object.assign(human, randomProperty(items));
+  human.item = randomProperty(items);
 
   return human;
 };

@@ -72,9 +72,9 @@ export default function Renderer(width, height, tilesize, getElement) {
       drawSprite(entity.sprite.x, entity.sprite.y)
         (c, entity.x, entity.y);
 
-      if(entity.name != "zombie" && entity.itemName != "NoItem") {
-        drawSprite(entity.itemSprite.x, entity.itemSprite.y)
-          (c, entity.x+0.3, entity.y-0.3);
+      if('item' in entity) {
+        drawSprite(entity.item.sprite.x, entity.item.sprite.y)
+          (c, entity.x + 0.3, entity.y - 0.3);
       }
     });
 
