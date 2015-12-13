@@ -101,17 +101,6 @@ function update() {
     const tileBehind = tiles[map[tx][ty]];
 
     if(tileBehind.isLiquid && !entity.drowned) {
-      const negativePoints = - entity.points;
-
-      // show the score for drowning this entity
-      if(negativePoints >= 0) {
-        state.texts.push(FloatingText('+' + negativePoints,
-              entity.x, entity.y, 30, 'green'));
-      } else {
-        state.texts.push(FloatingText(negativePoints,
-              entity.x, entity.y, 30, 'red'));
-      }
-
       entity.drowned = true;
       // kill movement in both directions to prevent horizontal
       // landing on the wall bugs
@@ -132,8 +121,10 @@ function update() {
       entity.isSafe = true;
 
       state.points += entity.points;
-      state.texts.push(FloatingText('+' + entity.points,
-              entity.x, entity.y, 30, 'green'));
+      const color = entity.points >= 0 ? '#c6db06' : 'red';
+      const num = Math.abs(entity.points);
+      state.texts.push(FloatingText(`$${entity.points}`,
+              entity.x, entity.y, 50, color));
     }
 
     const tileBelow = tiles[map[tx][ty + 1]];
