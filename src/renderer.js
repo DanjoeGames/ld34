@@ -1,5 +1,6 @@
 import onLoad from './util/on-load';
 import tiles from './models/tiles';
+import tiletypes from './constants/tiles';
 
 const spritesheet = new Image();
 spritesheet.src = 'assets/sprites.png';
@@ -53,9 +54,18 @@ export default function Renderer(width, height, tilesize, getElement) {
     const ts = tilesize;
 
     c.clearRect(0, 0, width, height);
+
     state.entities.forEach(entity => {
       drawSprite(entity.sprite.x, entity.sprite.y)
         (c, entity.x, entity.y);
+    });
+
+    state.bridges.forEach(bridge => {
+      const sprite = tiles[tiletypes.BRIDGE].sprite;
+      const draw = drawSprite(sprite.x, sprite.y);
+      for(let i = 0; i < bridge.length; i++) {
+        draw(c, bridge.x + i, bridge.y);
+      }
     });
   }
 

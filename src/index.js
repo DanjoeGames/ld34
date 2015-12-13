@@ -7,11 +7,13 @@ import Human from './entities/human';
 import Zombie from './entities/zombie';
 import Spawner from './spawner';
 import Entity from './entities';
+import Bridge from './bridge';
 import KeyboardState from './input';
 
 const tilesize = 50;
 const width = map.length * tilesize;
 const height = map[0].length * tilesize;
+
 
 const render = Renderer(width, height, tilesize, () => {
   return document.getElementById('game');
@@ -19,8 +21,13 @@ const render = Renderer(width, height, tilesize, () => {
 
 const keyIsDown = KeyboardState();
 
+const leftBridge = Bridge(4, 7, 5);
+
+const rightBridge = Bridge(4, 16, 5);
+
 const state = {
   entities: [],
+  bridges: [leftBridge, rightBridge],
   map
 };
 
@@ -41,7 +48,6 @@ const rightSpawn = Spawner({
 }, 500, 0.9, entity => {
   state.entities.push(entity);
 }).forever();
-
 
 function update() {
   state.entities.forEach(entity => {
