@@ -14,6 +14,7 @@ export default function(x, y, i, j) {
   human.y = y;
   human.i = i;
   human.j = j;
+  human.speed = 0.1;
 
   return human;
 };

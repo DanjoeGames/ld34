@@ -22,18 +22,18 @@ const state = {
 
 const leftSpawn = Spawner({
   generateEntity: Entity.oneOf(Human, Zombie),
-  x: 0,
+  x: 25,
   y: 4,
-  i: 0.1
+  i: -1
 }, 500, 0.9, entity => {
   state.entities.push(entity);
 }).forever();
 
 const rightSpawn = Spawner({
   generateEntity: Entity.oneOf(Human, Zombie),
-  x: 20,
-  y: 3,
-  i: -0.1
+  x: 1,
+  y: 4,
+  i: 1
 }, 500, 0.9, entity => {
   state.entities.push(entity);
 }).forever();
@@ -41,8 +41,8 @@ const rightSpawn = Spawner({
 
 function update() {
   state.entities.forEach(entity => {
-    const tx = Math.floor(entity.x);
-    const ty = Math.floor(entity.y);
+    const tx = Math.round(entity.x);
+    const ty = Math.round(entity.y);
 
 
     const tileBehind = tiles[map[tx][ty]];
@@ -64,7 +64,7 @@ function update() {
     }
 
     // apply movement
-    entity.x += entity.i;
+    entity.x += entity.speed * entity.i;
     entity.y += entity.j;
   });
 }

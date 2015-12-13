@@ -11,6 +11,7 @@ export default function(x, y, i=0, j=0) {
   zombie.y = y;
   zombie.i = i;
   zombie.j = j;
+  zombie.speed = 0.05;
 
   return zombie;
 };
