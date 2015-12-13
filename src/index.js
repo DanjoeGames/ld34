@@ -15,7 +15,16 @@ const tilesize = 50;
 const width = map.length * tilesize;
 const height = map[0].length * tilesize;
 
+var humansSaved = 0;
+
+var zombiesTaken = 0;
+
 var points = 0;
+
+var currentLevel = 0;
+
+const initialZombieLimit = 20;
+const intialHumanTarget = 30;
 
 const render = Renderer(width, height, tilesize, () => {
   return document.getElementById('game');
@@ -58,6 +67,13 @@ const rightSpawn = Spawner({
 }).forever();
 
 function update() {
+
+  if(zombiesTaken >= initialZombieLimit - (currentLevel * 2)) {
+    //show level failure dialogue
+  } else if(humansSaved >= intialHumanTarget + (currentLevel * 5)) {
+    //show next level diaglogue
+  }
+
   // update bridge state based on controls
   if(keyIsDown(controls.LEFT_BRIDGE)) {
     leftBridge.extend();
@@ -105,6 +121,12 @@ function update() {
     if(tileBehind.isLadder && !entity.isSafe) {
 
       points += entity.points;
+
+      if(entity.name != 'zombie') {
+        humansSaved += 1;
+      } else{
+        zombiesTaken += 1;
+      }
 
       state.texts.push(FloatingText('+' + entity.points,
               entity.x, entity.y, 30, 'green'));
