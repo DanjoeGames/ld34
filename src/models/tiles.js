@@ -13,6 +13,7 @@ export default {
   },
   [WATER]: {
     solid: false,
+    isLiquid: true,
     sprite: { x: 6, y: 1 }
   },
   [STONE]: {

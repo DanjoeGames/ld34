@@ -42,8 +42,6 @@ export default function Renderer(width, height, tilesize, getElement) {
       const dx = x * ts;
       const dy = y * ts;
 
-      c.fillRect(dx, dy, ts, ts);
-
       c.drawImage(spritesheet,
           sx, sy, ts, ts,
           dx, dy, ts, ts);
@@ -51,11 +49,19 @@ export default function Renderer(width, height, tilesize, getElement) {
   }
 
   function foreground(state) {
+    const c = fg.context;
+    const ts = tilesize;
 
+    c.clearRect(0, 0, width, height);
+    state.entities.forEach(entity => {
+      drawSprite(entity.sprite.x, entity.sprite.y)
+        (c, entity.x, entity.y);
+    });
   }
 
   function background(state) {
     const c = bg.context;
+    const ts = tilesize;
 
     state.map.forEach((row, x) => {
       row.forEach((type, y) => {
