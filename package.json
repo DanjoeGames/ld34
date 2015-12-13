@@ -9,7 +9,7 @@
     "build": "browserify src/index.js -o build/bundle.js -t [ babelify --presets [ es2015 ] ] -d",
     "watch:scripts": "watchify src/index.js -o build/bundle.js -t [ babelify --presets [ es2015 ] ] -d -v",
     "watch:static": "watch -p 'static/*' -c 'npm run copy:static'",
-    "watch": "npm run setup && npm run watch:scripts && npm run watch:static",
+    "watch": "npm run setup && npm run watch:scripts & npm run watch:static",
     "copy:static": "cp static/* build/ -r",
     "serve": "browser-sync start --server build --files 'build/*' --reload-delay 100",
     "start": "npm run watch & npm run serve",
@@ -33,5 +33,8 @@
     "browserify": "^12.0.1",
     "watch-cli": "^0.2.1",
     "watchify": "^3.6.1"
+  },
+  "dependencies": {
+    "pixi.js": "^3.0.8"
   }
 }
