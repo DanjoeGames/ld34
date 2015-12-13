@@ -72,15 +72,16 @@ export default function Renderer(width, height, tilesize, getElement) {
       drawSprite(entity.sprite.x, entity.sprite.y)
         (c, entity.x, entity.y);
 
-      if(entity.name != "zombie" && entity.itemName != "NoItem") {
+      if('item' in entity) {
         drawSprite(entity.item.sprite.x, entity.item.sprite.y)
-          (c, entity.x+0.3, entity.y-0.3);
+          (c, entity.x + 0.3, entity.y - 0.3);
       }
     });
 
     c.font = `10px monospace`;
     c.fillText("Level: " + state.currentLevel, 10, 10);
     c.fillText("Points: " + state.points, 100, 10);
+    c.fillText("x: " + (state.scoreMultipliers.map(m => m.value)).join('*'), 200, 10);
 
     state.texts.forEach(text => {
       if(text.dead) return;

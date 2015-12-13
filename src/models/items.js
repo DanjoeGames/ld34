@@ -1,4 +1,5 @@
 import defineSprite from '../util/define-sprite';
+import humans from '../models/humans';
 
 export default {
 
@@ -15,6 +16,9 @@ export default {
     apply: function(player, state) {
       state.entities.forEach(entity => {
         // speed all humans up
+        if(entity.name != 'Zombie') {
+          entity.speed += 0.1;
+        }
       });
     }
   },
@@ -22,6 +26,7 @@ export default {
     sprite: defineSprite(2, 2),
     name: 'Mobile Phone',
     apply: function(player, state) {
+      // increase this player's score by 10x
       player.score *= 10;
     }
   },
@@ -31,6 +36,7 @@ export default {
     apply: function(player, state) {
       state.entities.forEach(entity => {
         // turn all entities into gentlemen
+        Object.assign(entity, humans.gentleman);
       });
     }
   },
@@ -38,9 +44,6 @@ export default {
     sprite: defineSprite(4, 2),
     name: 'Burger',
     apply: function(player, state) {
-      state.entities.forEach(entity => {
-        // spawn slow & fat people
-      });
     }
   },
   icecream: {
@@ -49,6 +52,9 @@ export default {
     apply: function(player, state) {
       state.entities.forEach(entity => {
         // slow all zombies
+        if(entity.name == 'Zombie') {
+          entity.speed *= 0.5;
+        }
       });
     }
   }
