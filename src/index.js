@@ -45,6 +45,7 @@ const state = {
   entities: [],
   bridges: [leftBridge, rightBridge],
   texts: [],
+  scoreMultipliers: [],
   map,
   points: 0,
   currentLevel: 0
@@ -124,39 +125,19 @@ function update() {
     }
 
     if(tileBehind.isLadder && !entity.isSafe) {
-
-      state.points += entity.points;
-
       if(entity.name != 'zombie') {
         humansSaved += 1;
       } else{
         zombiesTaken += 1;
       }
 
-      state.texts.push(FloatingText('+' + entity.points,
-              entity.x, entity.y, 30, 'green'));
-
       entity.isSafe = true;
 
-      switch(entity.itemName) {
-        case "Jet":
-          state.entities.forEach( entity => {
-            if(entity.name != 'zombie') {
-              entity.speed = entity.speed * 2;
-            }
-          });
-        break;
-        case "BrainFreeze":
-          state.entities.forEach( entity => {
-            if(entity.name == 'zombie') {
-              entity.speed = entity.speed / 2;
-            }
-          });
-        break;
-        case "NoItem":
-        //do nothing in this case
-        break;
-      }
+      entity.item.apply(entity, state);
+
+      state.points += entity.points;
+      state.texts.push(FloatingText('+' + entity.points,
+              entity.x, entity.y, 30, 'green'));
     }
 
     const tileBelow = tiles[map[tx][ty + 1]];
