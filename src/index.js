@@ -40,7 +40,7 @@ const leftSpawn = Spawner({
   x: 25,
   y: 4,
   i: -1
-}, 500, 0.9, entity => {
+}, 1000, 0.9, entity => {
   state.entities.push(entity);
 }).forever();
 
@@ -49,7 +49,7 @@ const rightSpawn = Spawner({
   x: 1,
   y: 4,
   i: 1
-}, 500, 0.9, entity => {
+}, 1000, 0.9, entity => {
   state.entities.push(entity);
 }).forever();
 
