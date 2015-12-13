@@ -1,5 +1,6 @@
 import Entity from './';
 import humans from '../models/humans';
+import items from '../models/items';
 import randomProperty from '../util/random-property';
 
 export default function(x, y, i, j) {
@@ -13,6 +14,10 @@ export default function(x, y, i, j) {
   human.i = i;
   human.j = j;
   human.speed = 0.1;
+
+  human.isSafe = false;
+
+  Object.assign(human, randomProperty(items));
 
   return human;
 };

@@ -15,6 +15,17 @@ const tilesize = 50;
 const width = map.length * tilesize;
 const height = map[0].length * tilesize;
 
+var humansSaved = 0;
+
+var zombiesTaken = 0;
+
+var points = 0;
+
+var currentLevel = 0;
+
+const initialZombieLimit = 20;
+const intialHumanTarget = 30;
+
 const render = Renderer(width, height, tilesize, () => {
   return document.getElementById('game');
 });
@@ -34,7 +45,9 @@ const state = {
   entities: [],
   bridges: [leftBridge, rightBridge],
   texts: [],
-  map
+  map,
+  points: 0,
+  currentLevel: 0
 };
 
 const leftSpawn = Spawner({
@@ -56,6 +69,16 @@ const rightSpawn = Spawner({
 }).forever();
 
 function update() {
+
+  if(zombiesTaken >= initialZombieLimit - (state.currentLevel * 2)) {
+    //show level failure dialogue
+  } else if(humansSaved >= intialHumanTarget + (state.currentLevel * 5)) {
+    //show next level dialogue when we get here
+    state.currentLevel ++;
+    state.entities = [];
+    state.points = 0;
+  }
+
   // update bridge state based on controls
   if(keyIsDown(controls.LEFT_BRIDGE)) {
     leftBridge.extend();
@@ -98,6 +121,42 @@ function update() {
       // landing on the wall bugs
       entity.j = 0;
       entity.i = 0;
+    }
+
+    if(tileBehind.isLadder && !entity.isSafe) {
+
+      state.points += entity.points;
+
+      if(entity.name != 'zombie') {
+        humansSaved += 1;
+      } else{
+        zombiesTaken += 1;
+      }
+
+      state.texts.push(FloatingText('+' + entity.points,
+              entity.x, entity.y, 30, 'green'));
+
+      entity.isSafe = true;
+
+      switch(entity.itemName) {
+        case "Jet":
+          state.entities.forEach( entity => {
+            if(entity.name != 'zombie') {
+              entity.speed = entity.speed * 2;
+            }
+          });
+        break;
+        case "BrainFreeze":
+          state.entities.forEach( entity => {
+            if(entity.name == 'zombie') {
+              entity.speed = entity.speed / 2;
+            }
+          });
+        break;
+        case "NoItem":
+        //do nothing in this case
+        break;
+      }
     }
 
     const tileBelow = tiles[map[tx][ty + 1]];
