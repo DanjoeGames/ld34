@@ -2,15 +2,15 @@ import defineSprite from '../util/define-sprite';
 
 export default {
   creditCard: {
-    sprite: defineSprite(2, 1),
-    name: 'Credit Card'
+    sprite: defineSprite(0, 2),
+    name: 'Credit Card',
     apply: function(player, state) {
       state.scoreMultipliers.push({ value: 2 });
     }
   },
   redbull: {
-    sprite: defineSprite(2, 2),
-    name: 'Energy Drink'
+    sprite: defineSprite(1, 2),
+    name: 'Energy Drink',
     apply: function(player, state) {
       state.entities.forEach(entity => {
         // speed all humans up
@@ -19,14 +19,14 @@ export default {
   },
   phone: {
     sprite: defineSprite(2, 2),
-    name: 'Mobile Phone'
+    name: 'Mobile Phone',
     apply: function(player, state) {
       player.score *= 10;
     }
   },
   jackpot: {
-    sprite: defineSprite(2, 3),
-    name: 'Jackpot'
+    sprite: defineSprite(3, 2),
+    name: 'Jackpot',
     apply: function(player, state) {
       state.entities.forEach(entity => {
         // turn all entities into gentlemen
@@ -34,8 +34,8 @@ export default {
     }
   },
   burger: {
-    sprite: defineSprite(2, 4),
-    name: 'Burger'
+    sprite: defineSprite(4, 2),
+    name: 'Burger',
     apply: function(player, state) {
       state.entities.forEach(entity => {
         // spawn slow & fat people
@@ -43,8 +43,8 @@ export default {
     }
   },
   icecream: {
-    sprite: defineSprite(2, 5),
-    name: 'Brainfreeze'
+    sprite: defineSprite(5, 2),
+    name: 'Brainfreeze',
     apply: function(player, state) {
       state.entities.forEach(entity => {
         // slow all zombies
