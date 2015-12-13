@@ -125,15 +125,16 @@ function update() {
     }
 
     if(tileBehind.isLadder && !entity.isSafe) {
-      if(entity.name != 'zombie') {
+      if(entity.name != 'Zombie') {
         humansSaved += 1;
+        if('item' in entity) {
+          entity.item.apply(entity, state);
+        }
       } else{
         zombiesTaken += 1;
       }
 
       entity.isSafe = true;
-
-      entity.item.apply(entity, state);
 
       state.points += entity.points;
       state.texts.push(FloatingText('+' + entity.points,

@@ -2,6 +2,7 @@ import defineSprite from '../util/define-sprite';
 import humans from '../models/humans';
 
 export default {
+
   creditCard: {
     sprite: defineSprite(0, 2),
     name: 'Credit Card',
@@ -15,7 +16,7 @@ export default {
     apply: function(player, state) {
       state.entities.forEach(entity => {
         // speed all humans up
-        if(entity.type === 'human') {
+        if(entity.name != 'Zombie') {
           entity.speed += 0.1;
         }
       });
@@ -51,7 +52,7 @@ export default {
     apply: function(player, state) {
       state.entities.forEach(entity => {
         // slow all zombies
-        if(entity.type === 'zombie') {
+        if(entity.name == 'Zombie') {
           entity.speed *= 0.5;
         }
       });
