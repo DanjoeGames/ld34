@@ -141,14 +141,14 @@ function update() {
       switch(entity.itemName) {
         case "Jet":
           state.entities.forEach( entity => {
-            if(entity.name != 'zombie') {
+            if(entity.name != 'Zombie') {
               entity.speed = entity.speed * 2;
             }
           });
         break;
         case "BrainFreeze":
           state.entities.forEach( entity => {
-            if(entity.name == 'zombie') {
+            if(entity.name == 'Zombie') {
               entity.speed = entity.speed / 2;
             }
           });
