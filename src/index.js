@@ -45,7 +45,9 @@ const state = {
   entities: [],
   bridges: [leftBridge, rightBridge],
   texts: [],
-  map
+  map,
+  points: 0,
+  currentLevel: 0
 };
 
 const leftSpawn = Spawner({
@@ -68,10 +70,13 @@ const rightSpawn = Spawner({
 
 function update() {
 
-  if(zombiesTaken >= initialZombieLimit - (currentLevel * 2)) {
+  if(zombiesTaken >= initialZombieLimit - (state.currentLevel * 2)) {
     //show level failure dialogue
-  } else if(humansSaved >= intialHumanTarget + (currentLevel * 5)) {
-    //show next level diaglogue
+  } else if(humansSaved >= intialHumanTarget + (state.currentLevel * 5)) {
+    //show next level dialogue when we get here
+    state.currentLevel ++;
+    state.entities = [];
+    state.points = 0;
   }
 
   // update bridge state based on controls
@@ -120,7 +125,7 @@ function update() {
 
     if(tileBehind.isLadder && !entity.isSafe) {
 
-      points += entity.points;
+      state.points += entity.points;
 
       if(entity.name != 'zombie') {
         humansSaved += 1;
