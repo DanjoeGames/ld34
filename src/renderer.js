@@ -73,7 +73,8 @@ export default function Renderer(width, height, tilesize, getElement) {
         (c, entity.x, entity.y);
 
       if(entity.name != "zombie" && entity.itemName != "NoItem") {
-        drawPlaceholderSprite(c, entity.x, entity.y, 'blue');
+        drawSprite(entity.itemSprite.x, entity.itemSprite.y)
+          (c, entity.x+0.3, entity.y-0.3);
       }
     });
 
