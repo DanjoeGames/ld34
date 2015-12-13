@@ -84,6 +84,7 @@ function update() {
     if(tileBehind.isLiquid && !entity.drowned) {
       const negativePoints = - entity.points;
 
+      // show the score for drowning this entity
       if(negativePoints >= 0) {
         state.texts.push(FloatingText('+' + negativePoints,
               entity.x, entity.y, 30, 'green'));
@@ -91,7 +92,10 @@ function update() {
         state.texts.push(FloatingText(negativePoints,
               entity.x, entity.y, 30, 'red'));
       }
+
       entity.drowned = true;
+      // kill movement in both directions to prevent horizontal
+      // landing on the wall bugs
       entity.j = 0;
       entity.i = 0;
     }
