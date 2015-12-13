@@ -55,15 +55,15 @@ function update() {
     const ty = Math.round(entity.y);
 
     if(keyIsDown(controls.LEFT_BRIDGE)) {
-      // extend
+      leftBridge.extend();
     } else {
-      // retract
+      leftBridge.retract();
     }
 
     if(keyIsDown(controls.RIGHT_BRIDGE)) {
-      // extend
+      rightBridge.extend();
     } else {
-      // retract
+      rightBridge.retract();
     }
 
     const tileBehind = tiles[map[tx][ty]];

@@ -1,16 +1,14 @@
 export default function Bridge(length, x, y) {
-  const bridge = Object.create(Bridge.prototype);
+  const bridge = {};
 
-  bridge.expanded = true;
+  bridge.extended = true;
   bridge.length = length;
   bridge.x = x;
   bridge.y = y;
 
+  bridge.extend = () => bridge.extended = true;
+  bridge.retract = () => bridge.extended = false;
+
   return bridge;
 }
-
-Bridge.prototype = {
-  expand: () => this.expanded = true,
-  retract: () => this.expanded = false
-};
 

@@ -61,8 +61,11 @@ export default function Renderer(width, height, tilesize, getElement) {
     });
 
     state.bridges.forEach(bridge => {
+      if(!bridge.extended) return;
+
       const sprite = tiles[tiletypes.BRIDGE].sprite;
       const draw = drawSprite(sprite.x, sprite.y);
+
       for(let i = 0; i < bridge.length; i++) {
         draw(c, bridge.x + i, bridge.y);
       }
