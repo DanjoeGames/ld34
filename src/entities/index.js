@@ -1,9 +1,6 @@
+// All entities should inherit from this object
 export default {
-  or(alternative) {
-    return () => {
-      Math.random() > .5 ? this : alternative;
-    };
-  },
+  // this should be moved to a separate util function.
   oneOf(...types) {
     return function() {
       const type = types[Math.floor(Math.random() * types.length)];

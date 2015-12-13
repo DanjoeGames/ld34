@@ -5,6 +5,7 @@ import tiletypes from './constants/tiles';
 const spritesheet = new Image();
 spritesheet.src = 'assets/sprites.png';
 
+// Creates a canvas ready for rendering
 export function makeRenderingContext(width, height) {
   const canvas = document.createElement('canvas');
 
@@ -24,16 +25,20 @@ export default function Renderer(width, height, tilesize, getElement) {
   const fg = makeRenderingContext(width, height);
   const bg = makeRenderingContext(width, height);
 
+  // contain the canvases inside a container div
   const container = document.createElement('div');
   container.appendChild(bg.canvas);
   container.appendChild(fg.canvas);
 
   container.style.position = 'relative';
 
+  // use the onload util method to prevent race conditions
   onLoad(() => {
     getElement().appendChild(container);
   });
 
+  // helper method for drawing sprites - curried inner function allows
+  // the outer function to be called early, then cached.
   function drawSprite(x, y) {
     const ts = tilesize;
     const sx = x * ts;
@@ -49,6 +54,7 @@ export default function Renderer(width, height, tilesize, getElement) {
     };
   }
 
+  // all foreground rendering lives here
   function foreground(state) {
     const c = fg.context;
     const ts = tilesize;
@@ -61,6 +67,7 @@ export default function Renderer(width, height, tilesize, getElement) {
     });
   }
 
+  // all background rendering lives here
   function background(state) {
     const c = bg.context;
     const ts = tilesize;
@@ -76,6 +83,9 @@ export default function Renderer(width, height, tilesize, getElement) {
     });
   }
 
+  // the main render function - should only be extended if we
+  // introduce more layers or more complex rules for when certain
+  // layers need to be re-rendered
   return function(state) {
     background(state);
     foreground(state);

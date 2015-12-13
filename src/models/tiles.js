@@ -4,6 +4,8 @@ const {
   AIR, GRASS, GRASS_LEFT, GRASS_RIGHT, WATER, STONE, BRIDGE, LADDER
 } = constants;
 
+// use computed properties to build the tile dictionary.
+
 export default {
   [AIR]: {
     solid: false,

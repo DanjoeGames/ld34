@@ -5,6 +5,7 @@ import randomProperty from '../util/random-property';
 export default function(x, y, i=0, j=0) {
   const zombie = Object.create(Entity);
 
+  // use a random type of zombie
   Object.assign(zombie, randomProperty(zombies));
 
   zombie.x = x;

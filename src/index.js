@@ -18,12 +18,17 @@ const render = Renderer(width, height, tilesize, () => {
   return document.getElementById('game');
 });
 
+// creates a function which can be used to check whether a given key
+// is down.
 const keyIsDown = KeyboardState();
 
+// not using the extends properties as the bridges are not currently
+// extendable, but might add it again, so I'll leave them here
 const leftBridge = Bridge(4, 7, 5, { extends: 'left' });
-
 const rightBridge = Bridge(4, 16, 5, { extends: 'right' });
 
+// Keep all game data in a single state container so that we can just
+// pass one thing to render
 const state = {
   entities: [],
   bridges: [leftBridge, rightBridge],
@@ -49,6 +54,7 @@ const rightSpawn = Spawner({
 }).forever();
 
 function update() {
+  // update bridge state based on controls
   if(keyIsDown(controls.LEFT_BRIDGE)) {
     leftBridge.extend();
   } else {
@@ -61,10 +67,12 @@ function update() {
     rightBridge.retract();
   }
 
+  // allow bridges to hack themselves into the map
   state.bridges.forEach(bridge => {
     state.map = bridge.render(state.map);
   });
 
+  // update entities in the world
   state.entities.forEach(entity => {
     const tx = Math.round(entity.x);
     const ty = Math.round(entity.y);
@@ -85,7 +93,7 @@ function update() {
       entity.i = 0;
     }
 
-    // apply movement
+    // apply movement - could be moved t prototype
     entity.x += entity.speed * entity.i;
     entity.y += entity.j;
   });

@@ -2,12 +2,10 @@ import Entity from './';
 import humans from '../models/humans';
 import randomProperty from '../util/random-property';
 
-export default function(x, y, i=0, j=0) {
-}
-
 export default function(x, y, i, j) {
   const human = Object.create(Entity);
 
+  // sets to human to be a random type of human
   Object.assign(human, randomProperty(humans));
 
   human.x = x;
@@ -18,3 +16,4 @@ export default function(x, y, i, j) {
 
   return human;
 };
+
