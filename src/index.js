@@ -1,4 +1,5 @@
 import tiletypes from './constants/tiles';
+import controls from './constants/controls';
 import tiles from './models/tiles';
 import map from './models/map';
 import Renderer from './renderer';
@@ -6,6 +7,7 @@ import Human from './entities/human';
 import Zombie from './entities/zombie';
 import Spawner from './spawner';
 import Entity from './entities';
+import KeyboardState from './input';
 
 const tilesize = 50;
 const width = map.length * tilesize;
@@ -14,6 +16,8 @@ const height = map[0].length * tilesize;
 const render = Renderer(width, height, tilesize, () => {
   return document.getElementById('game');
 });
+
+const keyIsDown = KeyboardState();
 
 const state = {
   entities: [],
@@ -44,12 +48,20 @@ function update() {
     const tx = Math.round(entity.x);
     const ty = Math.round(entity.y);
 
+    if(keyIsDown(controls.LEFT_BRIDGE)) {
+      // extend
+    } else {
+      // retract
+    }
+
+    if(keyIsDown(controls.RIGHT_BRIDGE)) {
+      // extend
+    } else {
+      // retract
+    }
 
     const tileBehind = tiles[map[tx][ty]];
-    if(typeof tileBehind === 'undefined') {
-      console.log(entity.x, entity.y, tx, ty, map[tx][ty]);
-      throw error;
-    }
+
     if(tileBehind.isLiquid) {
       entity.drowned = true;
       entity.j = 0;
