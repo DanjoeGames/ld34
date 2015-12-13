@@ -5,6 +5,7 @@ import Renderer from './renderer';
 import Human from './entities/human';
 import Zombie from './entities/zombie';
 import Spawner from './spawner';
+import Entity from './entities';
 
 const tilesize = 50;
 const width = map.length * tilesize;
@@ -19,19 +20,36 @@ const state = {
   map
 };
 
-const leftSpawn = Spawner(Zombie, 1000, 0.9, zombie => {
-  zombie.x = 4;
-  zombie.y = 4;
-  zombie.i = 0.1;
-  state.entities.push(zombie);
+const leftSpawn = Spawner({
+  generateEntity: Entity.oneOf(Human, Zombie),
+  x: 0,
+  y: 4,
+  i: 0.1
+}, 500, 0.9, entity => {
+  state.entities.push(entity);
 }).forever();
+
+const rightSpawn = Spawner({
+  generateEntity: Entity.oneOf(Human, Zombie),
+  x: 20,
+  y: 3,
+  i: -0.1
+}, 500, 0.9, entity => {
+  state.entities.push(entity);
+}).forever();
+
 
 function update() {
   state.entities.forEach(entity => {
     const tx = Math.floor(entity.x);
     const ty = Math.floor(entity.y);
 
+
     const tileBehind = tiles[map[tx][ty]];
+    if(typeof tileBehind === 'undefined') {
+      console.log(entity.x, entity.y, tx, ty, map[tx][ty]);
+      throw error;
+    }
     if(tileBehind.isLiquid) {
       entity.drowned = true;
       entity.j = 0;
@@ -52,7 +70,7 @@ function update() {
 }
 
 function animate() {
-  setTimeout(animate, 1000 / 60);
+  setTimeout(animate, 50);
   update();
   render(state);
 }

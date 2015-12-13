@@ -13,4 +13,4 @@ export default function(x, y, i=0, j=0) {
   zombie.j = j;
 
   return zombie;
-}
+};
