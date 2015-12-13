@@ -4,6 +4,7 @@ import map from './models/map';
 import Renderer from './renderer';
 import Human from './entities/human';
 import Zombie from './entities/zombie';
+import Spawner from './spawner';
 
 const tilesize = 50;
 const width = map.length * tilesize;
@@ -14,9 +15,16 @@ const render = Renderer(width, height, tilesize, () => {
 });
 
 const state = {
-  entities: [Human(5, 2, 0.1), Human(6, 2), Zombie(4, 2), Zombie(3, 2)],
+  entities: [],
   map
 };
+
+const leftSpawn = Spawner(Zombie, 1000, 0.9, zombie => {
+  zombie.x = 4;
+  zombie.y = 4;
+  zombie.i = 0.1;
+  state.entities.push(zombie);
+}).forever();
 
 function update() {
   state.entities.forEach(entity => {
@@ -44,7 +52,7 @@ function update() {
 }
 
 function animate() {
-  setTimeout(animate, 100);
+  setTimeout(animate, 1000 / 60);
   update();
   render(state);
 }
