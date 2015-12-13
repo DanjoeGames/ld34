@@ -52,13 +52,23 @@ export default function Renderer(width, height, tilesize, getElement) {
     const sx = x * ts;
     const sy = y * ts;
 
-    return function(c, x, y) {
+    return function(c, x, y, dingosAteMyBaby) {
       const dx = x * ts;
       const dy = y * ts;
 
+      c.save();
+
+      c.translate(dx, dy);
+
+      if(dingosAteMyBaby) {
+        c.scale(1, -1);
+      }
+
       c.drawImage(spritesheet,
           sx, sy, ts, ts,
-          dx, dy, ts, ts);
+          0, 0, ts, ts);
+
+      c.restore();
     };
   }
 
@@ -90,12 +100,13 @@ export default function Renderer(width, height, tilesize, getElement) {
         animPos = entity.animation.displaceSprite(entity.x, entity.y);
       }
 
+
       drawSprite(entity.sprite.x, entity.sprite.y)
-        (c, animPos.x, animPos.y);
+        (c, animPos.x, animPos.y, entity.falling);
 
       if('item' in entity) {
         drawSprite(entity.item.sprite.x, entity.item.sprite.y)
-          (c, animPos.x + 0.3, animPos.y - 0.3);
+          (c, animPos.x + 0.3, animPos.y - 0.3, entity.falling);
       }
     });
 

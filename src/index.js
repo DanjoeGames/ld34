@@ -134,7 +134,9 @@ function update() {
     const tileBelow = tiles[map[tx][ty + 1]];
     if(tileBelow.solid) {
       entity.j = 0;
+      entity.falling = false;
     } else {
+      entity.falling = true;
       entity.j += 0.1;
       entity.i = 0;
     }
