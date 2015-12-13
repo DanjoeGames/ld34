@@ -18,8 +18,8 @@
    inkscape:version="0.91 r13725"
    sodipodi:docname="sprites.svg"
    inkscape:export-filename="/home/dan/dev/org/danjoe/bridge/img/sprites.png"
-   inkscape:export-xdpi="14.998186"
-   inkscape:export-ydpi="14.998186">
+   inkscape:export-xdpi="15"
+   inkscape:export-ydpi="15">
   <defs
      id="defs4">
     <pattern
@@ -59,9 +59,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.70710678"
-     inkscape:cx="1930.6305"
-     inkscape:cy="165.53284"
+     inkscape:zoom="0.25"
+     inkscape:cx="1455.3349"
+     inkscape:cy="189.3778"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
