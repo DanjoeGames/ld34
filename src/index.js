@@ -15,6 +15,8 @@ const tilesize = 50;
 const width = map.length * tilesize;
 const height = map[0].length * tilesize;
 
+var points = 0;
+
 const render = Renderer(width, height, tilesize, () => {
   return document.getElementById('game');
 });
@@ -101,6 +103,12 @@ function update() {
     }
 
     if(tileBehind.isLadder && !entity.isSafe) {
+
+      points += entity.points;
+
+      state.texts.push(FloatingText('+' + entity.points,
+              entity.x, entity.y, 30, 'green'));
+
       entity.isSafe = true;
 
       switch(entity.itemName) {
