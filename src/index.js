@@ -15,13 +15,6 @@ const tilesize = 50;
 const width = map.length * tilesize;
 const height = map[0].length * tilesize;
 
-var humansSaved = 0;
-
-var zombiesTaken = 0;
-
-var points = 0;
-
-var currentLevel = 0;
 
 const initialZombieLimit = 20;
 const intialHumanTarget = 30;
@@ -48,7 +41,9 @@ const state = {
   scoreMultipliers: [],
   map,
   points: 0,
-  currentLevel: 0
+  currentLevel: 0,
+  humansSaved: 0,
+  zombiesTaken: 0
 };
 
 const leftSpawn = Spawner({
@@ -71,9 +66,9 @@ const rightSpawn = Spawner({
 
 function update() {
 
-  if(zombiesTaken >= initialZombieLimit - (state.currentLevel * 2)) {
+  if(state.zombiesTaken >= initialZombieLimit - (state.currentLevel * 2)) {
     //show level failure dialogue
-  } else if(humansSaved >= intialHumanTarget + (state.currentLevel * 5)) {
+  } else if(state.humansSaved >= intialHumanTarget + (state.currentLevel * 5)) {
     //show next level dialogue when we get here
     state.currentLevel ++;
     state.entities = [];
@@ -126,12 +121,12 @@ function update() {
 
     if(tileBehind.isLadder && !entity.isSafe) {
       if(entity.name != 'Zombie') {
-        humansSaved += 1;
+        state.humansSaved += 1;
         if('item' in entity) {
           entity.item.apply(entity, state);
         }
       } else{
-        zombiesTaken += 1;
+        state.zombiesTaken += 1;
       }
 
       entity.isSafe = true;

@@ -28,8 +28,8 @@ export default Container(function() {
       ]);
     },
     update(state) {
-      level.innerText = state.level;
-      money.innerText = state.money;
+      level.innerText = state.currentLevel;
+      money.innerText = state.points;
       humans.innerText = state.humansSaved;
       zombies.innerText = state.zombiesTaken;
     }
