@@ -113,6 +113,10 @@ function update() {
         state.humansSaved += 1;
         if('item' in entity) {
           entity.item.apply(entity, state);
+          state.texts.push(FloatingText(entity.item.name,
+              entity.x, 2, 70, 'cyan'));
+          state.texts.push(FloatingText(entity.item.description,
+              entity.x, 3.5, 30, 'white'));
         }
       } else{
         state.zombiesTaken += 1;
