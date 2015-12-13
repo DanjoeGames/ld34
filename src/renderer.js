@@ -75,13 +75,27 @@ export default function Renderer(width, height, tilesize, getElement) {
 
     c.clearRect(0, 0, width, height);
 
+    for(var i=0; i<state.entities.length; i++) {
+      state.entities[i].animation.update();
+    }
+
     state.entities.forEach(entity => {
+
+      var animPos = {
+        x: entity.x,
+        y: entity.y
+      };
+
+      if(!entity.drowned) {
+        animPos = entity.animation.displaceSprite(entity.x, entity.y);
+      }
+
       drawSprite(entity.sprite.x, entity.sprite.y)
-        (c, entity.x, entity.y);
+        (c, animPos.x, animPos.y);
 
       if('item' in entity) {
         drawSprite(entity.item.sprite.x, entity.item.sprite.y)
-          (c, entity.x + 0.3, entity.y - 0.3);
+          (c, animPos.x + 0.3, animPos.y - 0.3);
       }
     });
 

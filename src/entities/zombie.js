@@ -13,7 +13,31 @@ export default function(x, y, i=0, j=0) {
   zombie.i = i;
   zombie.j = j;
   zombie.speed = 0.05;
-  zombie.itemName = "NoItem"
+  zombie.itemName = "NoItem";
+
+  zombie.animation = {
+    cycleFrames: 5,
+    counter: 0,
+    yPos: 0,
+
+    update: function() {
+      if(this.counter < this.cycleFrames) {
+        this.yPos -= 0.01;
+      } else {
+        this.yPos = 0;
+        this.counter = 0;
+      }
+
+      this.counter ++;
+    },
+
+    displaceSprite: function(x, y) {
+      return {
+        y: y + this.yPos,
+        x: x
+      };
+    }
+  };
 
   return zombie;
 };
