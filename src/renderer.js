@@ -81,7 +81,14 @@ export default function Renderer(width, height, tilesize, getElement) {
 
     state.entities.forEach(entity => {
 
-      var animPos = entity.animation.displaceSprite(entity.x, entity.y);
+      var animPos = {
+        x: entity.x,
+        y: entity.y
+      };
+
+      if(!entity.drowned) {
+        animPos = entity.animation.displaceSprite(entity.x, entity.y);
+      }
 
       drawSprite(entity.sprite.x, entity.sprite.y)
         (c, animPos.x, animPos.y);

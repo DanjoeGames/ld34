@@ -33,7 +33,7 @@ export default function(x, y, i, j) {
       this.counter ++;
     },
 
-    displaceSprite: function(x, y) { 
+    displaceSprite: function(x, y) {
       return {
         y: y + this.yPos,
         x: x
