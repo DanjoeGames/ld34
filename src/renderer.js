@@ -31,6 +31,7 @@ export default function Renderer(width, height, tilesize, getElement) {
   container.appendChild(fg.canvas);
 
   container.style.position = 'relative';
+  bg.canvas.style.backgroundImage = 'url(assets/background.png)';
 
   // use the onload util method to prevent race conditions
   onLoad(() => {
