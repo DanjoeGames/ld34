@@ -127,7 +127,9 @@ function update() {
     if(tileBehind.isLadder && !entity.isSafe) {
       if(entity.name != 'Zombie') {
         humansSaved += 1;
-        entity.item.apply(entity, state);
+        if('item' in entity) {
+          entity.item.apply(entity, state);
+        }
       } else{
         zombiesTaken += 1;
       }
