@@ -81,6 +81,7 @@ export default function Renderer(width, height, tilesize, getElement) {
     c.font = `10px monospace`;
     c.fillText("Level: " + state.currentLevel, 10, 10);
     c.fillText("Points: " + state.points, 100, 10);
+    c.fillText("x: " + state.scoreMultipliers.join(''), 200, 10);
 
     state.texts.forEach(text => {
       if(text.dead) return;

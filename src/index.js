@@ -45,6 +45,7 @@ const state = {
   entities: [],
   bridges: [leftBridge, rightBridge],
   texts: [],
+  scoreMultipliers: [],
   map,
   points: 0,
   currentLevel: 0
