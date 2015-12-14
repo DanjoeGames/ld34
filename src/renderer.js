@@ -4,6 +4,7 @@ import tiletypes from './constants/tiles';
 
 import status from './ui/status';
 import menu from './ui/menu';
+import stats from './ui/stats';
 
 const spritesheet = new Image();
 spritesheet.src = 'assets/sprites.png';
@@ -34,6 +35,7 @@ export default function Renderer(width, height, tilesize, getElement) {
   container.appendChild(fg.canvas);
 
   container.appendChild(status.create());
+  container.appendChild(stats.create());
   // menu isn't working
   //container.appendChild(menu.create());
 
@@ -144,6 +146,7 @@ export default function Renderer(width, height, tilesize, getElement) {
     background(state);
     foreground(state);
     status.update(state);
+    stats.update(state);
   };
 }
 
