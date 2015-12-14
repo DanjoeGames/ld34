@@ -1,4 +1,3 @@
-import 'core-js';
 import tiletypes from './constants/tiles';
 import controls from './constants/controls';
 import tiles from './models/tiles';
@@ -19,10 +18,6 @@ import Level from './level';
 const tilesize = 50;
 const width = map.length * tilesize;
 const height = map[0].length * tilesize;
-
-const initialZombieLimit = 20;
-const intialHumanTarget = 30;
-
 
 const render = Renderer(width, height, tilesize, () => {
   return document.getElementById('game');
