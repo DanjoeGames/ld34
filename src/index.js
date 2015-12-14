@@ -72,7 +72,6 @@ const rightSpawn = Spawner({
 
 function update() {
 
-  console.log(state.humansSaved >= state.level.humanTarget);
   if(state.zombiesTaken >= state.level.zombieLimit) {
     //show level failure dialogue
   }

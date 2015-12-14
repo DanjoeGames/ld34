@@ -84,11 +84,9 @@ export default function Renderer(width, height, tilesize, getElement) {
 
     c.clearRect(0, 0, width, height);
 
-    for(var i=0; i<state.entities.length; i++) {
-      state.entities[i].animation.update();
-    }
-
     state.entities.forEach(entity => {
+
+      entity.animation.update();
 
       var animPos = {
         x: entity.x,
