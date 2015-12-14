@@ -115,20 +115,6 @@ export default function Renderer(width, height, tilesize, getElement) {
           (ctx, animPos.x + 0.3, animPos.y - 0.3, entity.rotation);
       }
     });
-
-    state.texts.forEach(text => {
-      c.font = `${text.size}px Purisa`;
-      c.textAlign = 'center';
-      c.lineColor = 'black';
-      c.fillStyle = text.color;
-      c.fillText(text.text, text.x * ts, (text.y * ts) - (10 - text.age));
-      c.strokeText(text.text, text.x * ts, (text.y * ts) - (10 - text.age));
-      text.age -= 1;
-
-      if(text.age <= 0) {
-        state.texts.delete(text);
-      }
-    });
   }
 
   // all background rendering lives here
@@ -144,6 +130,20 @@ export default function Renderer(width, height, tilesize, getElement) {
 
         drawSprite(tile.sprite.x, tile.sprite.y)(c, x, y);
       });
+    });
+
+    state.texts.forEach(text => {
+      c.font = `${text.size}px Purisa`;
+      c.textAlign = 'center';
+      c.lineColor = 'black';
+      c.fillStyle = text.color;
+      c.fillText(text.text, text.x * ts, (text.y * ts) - (10 - text.age));
+      c.strokeText(text.text, text.x * ts, (text.y * ts) - (10 - text.age));
+      text.age -= 1;
+
+      if(text.age <= 0) {
+        state.texts.delete(text);
+      }
     });
   }
 
