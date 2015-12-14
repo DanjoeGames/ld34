@@ -77,9 +77,10 @@ function update() {
   leftSpawn.spawn();
   rightSpawn.spawn();
 
-  if(state.zombiesTaken >= state.level.zombieLimit) {
+  if(state.zombiesTaken > state.level.zombieLimit) {
     //show level failure dialogue
-    state.level = Level(0);
+    state.gameOver = true;
+    state.paused = true;
   }
   if(state.humansSaved >= state.level.humanTarget) {
     //show next level dialogue when we get here
