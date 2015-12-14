@@ -49,7 +49,7 @@ export default function(x, y, i, j) {
     }
   };
 
-  if(Math.random() > 0) {
+  if(Math.random() > 0.8) {
     human.item = randomProperty(items);
   }
 
