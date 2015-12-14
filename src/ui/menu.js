@@ -6,6 +6,8 @@ const div = Element.partial('div');
 const span = Element.partial('span');
 const h2 = Element.partial('h2');
 const button = Element.partial('button');
+const strong = Element.partial('strong');
+const img = Element.partial('img');
 
 export default Container(function() {
   function makeMenuItem(title) {
@@ -15,15 +17,11 @@ export default Container(function() {
   }
 
   const play = makeMenuItem('Play');
-  const help = makeMenuItem('Help');
-  const achievements = makeMenuItem('Achievements');
 
   const dialogue = Dialogue(
     div({ class: 'menu' }, [
       h2({}, ['Zombridge']),
-      play,
-      help,
-      achievements
+      play
     ])
   );
 
@@ -36,14 +34,6 @@ export default Container(function() {
       play.on('click', () => {
         state.showMenu = false;
         state.paused = false;
-      });
-
-      help.on('click', () => {
-        state.showMenu = false;
-      });
-
-      achievements.on('click', () => {
-        state.showMenu = false;
       });
 
       if(state.showMenu) {
