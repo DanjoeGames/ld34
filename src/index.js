@@ -56,7 +56,9 @@ const leftSpawn = Spawner({
   y: 4,
   i: -1
 }, 1000, 0.9, entity => {
-  state.entities.add(entity);
+  if(entity.level <= state.level.number) {
+    state.entities.add(entity);
+  }
 });
 
 const rightSpawn = Spawner({
@@ -65,7 +67,9 @@ const rightSpawn = Spawner({
   y: 4,
   i: 1
 }, 1000, 0.9, entity => {
-  state.entities.add(entity);
+  if(entity.level <= state.level.number) {
+    state.entities.add(entity);
+  }
 });
 
 function update() {
