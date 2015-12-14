@@ -59,7 +59,7 @@ const leftSpawn = Spawner({
   i: -1
 }, 1000, 0.9, entity => {
   state.entities.add(entity);
-}).forever();
+});
 
 const rightSpawn = Spawner({
   generateEntity: Entity.oneOf(Human, Zombie),
@@ -68,9 +68,11 @@ const rightSpawn = Spawner({
   i: 1
 }, 1000, 0.9, entity => {
   state.entities.add(entity);
-}).forever();
+});
 
 function update() {
+  leftSpawn.spawn();
+  rightSpawn.spawn();
 
   if(state.zombiesTaken >= state.level.zombieLimit) {
     //show level failure dialogue
