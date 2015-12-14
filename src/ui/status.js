@@ -10,6 +10,7 @@ export default Container(function() {
   const money = span({ class: 'status-bar__value' });
   const humans = span({ class: 'status-bar__value' });
   const zombies = span({ class: 'status-bar__value' });
+  const multiplier = img({ src: 'assets/x1.png' });
 
   function makeItem(imgSrc, valueElement) {
     return div({ class: 'status-bar__item' }, [
@@ -24,7 +25,10 @@ export default Container(function() {
         makeItem('assets/level.png', level),
         makeItem('assets/money.png', money),
         makeItem('assets/humans.png', humans),
-        makeItem('assets/zombies.png', zombies)
+        makeItem('assets/zombies.png', zombies),
+        div({ class: 'status-bar__item' }, [
+          multiplier
+        ])
       ]);
     },
     update(state) {
@@ -32,6 +36,7 @@ export default Container(function() {
       money.innerText = state.points;
       humans.innerText = state.humansSaved;
       zombies.innerText = state.zombiesTaken;
+      multiplier.src = `assets/x${state.scoreMultipliers.multiplier()}.png`;
     }
   };
 });

@@ -8,7 +8,7 @@ export default {
     name: 'Credit Card',
     description: '2x multiplier',
     apply: function(player, state) {
-      state.scoreMultipliers.push({ value: 2 });
+      state.scoreMultipliers.apply(2, 10000);
     }
   },
   redbull: {

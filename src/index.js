@@ -11,11 +11,11 @@ import Bridge from './bridge';
 import { FloatingText } from './text';
 import KeyboardState from './input';
 import chance from './util/chance';
+import Multiplier from './multiplier';
 
 const tilesize = 50;
 const width = map.length * tilesize;
 const height = map[0].length * tilesize;
-
 
 const initialZombieLimit = 20;
 const intialHumanTarget = 30;
@@ -36,10 +36,11 @@ const rightBridge = Bridge(4, 16, 5, { extends: 'right' });
 // Keep all game data in a single state container so that we can just
 // pass one thing to render
 const state = {
+  paused: false,
   entities: [],
   bridges: [leftBridge, rightBridge],
   texts: [],
-  scoreMultipliers: [],
+  scoreMultipliers: Multiplier(),
   map,
   points: 0,
   currentLevel: 0,
@@ -125,11 +126,12 @@ function update() {
 
       entity.isSafe = true;
 
-      state.points += entity.points;
-      const color = entity.points >= 0 ? '#c6db06' : 'red';
-      const num = Math.abs(entity.points);
-      state.texts.push(FloatingText(`$${entity.points}`,
-              entity.x, entity.y, 50, color));
+      const points = entity.points * state.scoreMultipliers.multiplier();
+      state.points += points;
+
+      const color = points >= 0 ? '#c6db06' : 'red';
+      const num = Math.abs(points);
+      state.texts.push(FloatingText(`$${num}`, entity.x, entity.y, 50, color));
     }
 
     const tileBelow = tiles[map[tx][ty + 1]];
@@ -154,7 +156,9 @@ function update() {
 
 function animate() {
   setTimeout(animate, 50);
-  update();
+  if(!state.paused) {
+    update();
+  }
   render(state);
 }
 
