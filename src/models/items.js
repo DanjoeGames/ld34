@@ -88,5 +88,34 @@ export default {
       player.points = Math.floor(Math.random() * 10000);
     }
   },
+  sword: {
+    sprite: defineSprite(2, 4),
+    name: 'Sword',
+    color: 'grey',
+    description: 'Instakill Zombies',
+    apply: function(player, state) {
+    }
+  },
+  die: {
+    sprite: defineSprite(3, 4),
+    name: 'Die',
+    color: 'white',
+    description: '',
+    apply: function(player, state) {
+    }
+  },
+  airstrike: {
+    sprite: defineSprite(4, 4),
+    name: 'Airstrike',
+    color: 'red',
+    description: 'Instakill all zombies!',
+    apply: function(player, state) {
+      state.entities.forEach(entity => {
+        if(entity.name === 'Zombie') {
+          state.entities.delete(entity);
+        }
+      });
+    }
+  }
 }
 
