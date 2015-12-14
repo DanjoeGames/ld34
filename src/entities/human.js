@@ -63,9 +63,11 @@ var get_possible_items = function(level) {
   var pool = {};
 
   Object.keys(items).forEach(key => {
+
     var item = items[key];
-    if(item.level >= level) {
-      pool[key] = {key: item};
+    if(item.level <= level.number) {
+      pool[key] = item;
+      // Object.assign(pool[key], item);
     }
   });
   return pool;
