@@ -6,8 +6,13 @@ import randomProperty from '../util/random-property';
 export default function(x, y, i, j) {
   const human = Object.create(Entity);
 
+  const rarity = Math.random();
+  const types = Object.keys(humans).map(type => humans[type]);
+  const availableTypes = types
+    .filter(type => type.rarity >= rarity);
+
   // sets to human to be a random type of human
-  Object.assign(human, randomProperty(humans));
+  Object.assign(human, randomProperty(availableTypes));
 
   human.x = x;
   human.y = y;
@@ -44,7 +49,9 @@ export default function(x, y, i, j) {
     }
   };
 
-  human.item = randomProperty(items);
+  if(Math.random() > 0.9) {
+    human.item = randomProperty(items);
+  }
 
   return human;
 };

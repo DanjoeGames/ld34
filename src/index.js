@@ -59,7 +59,7 @@ const leftSpawn = Spawner({
   i: -1
 }, 1000, 0.9, entity => {
   state.entities.add(entity);
-}).forever();
+});
 
 const rightSpawn = Spawner({
   generateEntity: Entity.oneOf(Human, Zombie),
@@ -68,13 +68,15 @@ const rightSpawn = Spawner({
   i: 1
 }, 1000, 0.9, entity => {
   state.entities.add(entity);
-}).forever();
+});
 
 function update() {
+  leftSpawn.spawn();
+  rightSpawn.spawn();
 
-  console.log(state.humansSaved >= state.level.humanTarget);
   if(state.zombiesTaken >= state.level.zombieLimit) {
     //show level failure dialogue
+    state.level = Level(0);
   }
   if(state.humansSaved >= state.level.humanTarget) {
     //show next level dialogue when we get here
@@ -88,7 +90,6 @@ function update() {
 
     // advance to next level
     state.level = state.level.next();
-    console.log(state.level);
 
     state.showStats = true;
     state.paused = true;
@@ -96,6 +97,11 @@ function update() {
     // reset goals
     state.humansSaved = 0;
     state.zombiesTaken = 0;
+  }
+
+  if(keyIsDown(controls.MAIN_MENU)) {
+    state.showMenu = true;
+    state.paused = true;
   }
 
   // update bridge state based on controls
@@ -144,7 +150,7 @@ function update() {
         if('item' in entity) {
           entity.item.apply(entity, state);
           state.texts.add(FloatingText(entity.item.name,
-              entity.x, 2, 70, 'cyan'));
+              entity.x, 2, 70, entity.item.color || 'cyan'));
           state.texts.add(FloatingText(entity.item.description,
               entity.x, 3.5, 30, 'white'));
         }

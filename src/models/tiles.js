@@ -32,7 +32,7 @@ export default {
   [LADDER]: {
     solid: false,
     isLadder: true,
-    sprite: { x: 8, y: 0 }
+    sprite: { x: 6, y: 2 }
   },
   [GRASS_LEFT]: {
     solid: true,

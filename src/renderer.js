@@ -26,21 +26,24 @@ export function makeRenderingContext(width, height) {
 }
 
 export default function Renderer(width, height, tilesize, getElement) {
+  const water = makeRenderingContext(width, height);
   const fg = makeRenderingContext(width, height);
+  const drowned = makeRenderingContext(width, height);
   const bg = makeRenderingContext(width, height);
 
   // contain the canvases inside a container div
   const container = document.createElement('div');
-  container.appendChild(bg.canvas);
+  container.appendChild(drowned.canvas);
   container.appendChild(fg.canvas);
+  container.appendChild(water.canvas);
+  container.appendChild(bg.canvas);
 
   container.appendChild(status.create());
   container.appendChild(stats.create());
-  // menu isn't working
-  //container.appendChild(menu.create());
+  container.appendChild(menu.create());
 
   container.style.position = 'relative';
-  bg.canvas.style.backgroundImage = 'url(assets/background.png)';
+  drowned.canvas.style.backgroundImage = 'url(assets/background.png)';
 
   // use the onload util method to prevent race conditions
   onLoad(() => {
@@ -79,7 +82,7 @@ export default function Renderer(width, height, tilesize, getElement) {
 
   // all foreground rendering lives here
   function foreground(state) {
-    const c = fg.context;
+    let c = fg.context;
     const ts = tilesize;
 
     c.clearRect(0, 0, width, height);
@@ -89,6 +92,7 @@ export default function Renderer(width, height, tilesize, getElement) {
     }
 
     state.entities.forEach(entity => {
+      let ctx = c;
 
       var animPos = {
         x: entity.x,
@@ -97,28 +101,18 @@ export default function Renderer(width, height, tilesize, getElement) {
 
       if(!entity.drowned) {
         animPos = entity.animation.displaceSprite(entity.x, entity.y);
+      } else {
+        // draw on drowned canvas
+        state.entities.delete(entity);
+        ctx = drowned.context;
       }
 
       drawSprite(entity.sprite.x, entity.sprite.y)
-        (c, animPos.x, animPos.y, entity.rotation);
+        (ctx, animPos.x, animPos.y, entity.rotation);
 
       if('item' in entity) {
         drawSprite(entity.item.sprite.x, entity.item.sprite.y)
-          (c, animPos.x + 0.3, animPos.y - 0.3, entity.rotation);
-      }
-    });
-
-    state.texts.forEach(text => {
-      c.font = `${text.size}px Purisa`;
-      c.textAlign = 'center';
-      c.lineColor = 'black';
-      c.fillStyle = text.color;
-      c.fillText(text.text, text.x * ts, (text.y * ts) - (10 - text.age));
-      c.strokeText(text.text, text.x * ts, (text.y * ts) - (10 - text.age));
-      text.age -= 1;
-
-      if(text.age <= 0) {
-        state.texts.delete(text);
+          (ctx, animPos.x + 0.3, animPos.y - 0.3, entity.rotation);
       }
     });
   }
@@ -137,6 +131,37 @@ export default function Renderer(width, height, tilesize, getElement) {
         drawSprite(tile.sprite.x, tile.sprite.y)(c, x, y);
       });
     });
+
+    state.texts.forEach(text => {
+      c.font = `${text.size}px Purisa`;
+      c.textAlign = 'center';
+      c.lineColor = 'black';
+      c.fillStyle = text.color;
+      c.fillText(text.text, text.x * ts, (text.y * ts) - (10 - text.age));
+      c.strokeText(text.text, text.x * ts, (text.y * ts) - (10 - text.age));
+      text.age -= 1;
+
+      if(text.age <= 0) {
+        state.texts.delete(text);
+      }
+    });
+  }
+
+  let ticks = 0;
+  function waves() {
+    ticks += 1;
+    const c = water.context;
+    c.clearRect(0, 0, width, height);
+    c.fillStyle = 'rgba(44, 113, 160, 0.6)';
+    c.beginPath();
+    c.moveTo(0, 500)
+    for(var i = 0; i < width; i++) {
+      c.lineTo(i, 500 + (Math.sin((i + ticks) / 10) * 10));
+    }
+    c.lineTo(width, height);
+    c.lineTo(0, height);
+    c.fill();
+    c.stroke();
   }
 
   // the main render function - should only be extended if we
@@ -145,8 +170,10 @@ export default function Renderer(width, height, tilesize, getElement) {
   return function(state) {
     background(state);
     foreground(state);
+    waves();
     status.update(state);
     stats.update(state);
+    menu.update(state);
   };
 }
 

@@ -13,7 +13,9 @@
     "copy:static": "cp -r static/* build/",
     "serve": "browser-sync start --server build --files 'build/*' --reload-delay 100",
     "start": "npm run watch & npm run serve",
-    "postinstall": "npm run setup && npm run build && npm run copy:static"
+    "postinstall": "npm run setup && npm run build && npm run copy:static",
+    "deploy": "surge --project ./build --domain zombridge.surge.sh",
+    "test": ""
   },
   "repository": {
     "type": "git",
@@ -31,6 +33,7 @@
     "babelify": "^7.2.0",
     "browser-sync": "^2.10.0",
     "browserify": "^12.0.1",
+    "surge": "^0.17.3",
     "watch-cli": "^0.2.1",
     "watchify": "^3.6.1"
   },
