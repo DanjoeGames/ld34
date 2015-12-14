@@ -22,6 +22,7 @@ const height = map[0].length * tilesize;
 const initialZombieLimit = 20;
 const intialHumanTarget = 30;
 
+
 const render = Renderer(width, height, tilesize, () => {
   return document.getElementById('game');
 });
@@ -35,7 +36,7 @@ const rightBridge = Bridge(4, 16, 5, { key: controls.RIGHT_BRIDGE });
 
 // Keep all game data in a single state container so that we can just
 // pass one thing to render
-const state = {
+export const state = {
   paused: false,
   entities: new Set(),
   bridges: [leftBridge, rightBridge],
