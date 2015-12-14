@@ -15,7 +15,7 @@
     "start": "npm run watch & npm run serve",
     "postinstall": "npm run setup && npm run build && npm run copy:static",
     "deploy": "surge --project ./build --domain zombridge.surge.sh",
-    "test": ""
+    "test": "echo 'Tests? Not likely!'"
   },
   "repository": {
     "type": "git",
