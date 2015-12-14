@@ -175,16 +175,16 @@ function update() {
       const color = points >= 0 ? '#c6db06' : 'red';
       const num = Math.abs(points);
       const sign = points >= 0 ? '+' : '-';
-      state.texts.add(FloatingText(`${sign}$${num}`, entity.x, entity.y, 50, color));
+      state.texts.add(FloatingText(`${sign}$${num}`, entity.x, entity.y + 1, 50, color));
 
       if('specialText' in entity) {
-        state.texts.add(FloatingText(entity.specialText(), entity.x, entity.y - 1, 30, 'white'));
+        state.texts.add(FloatingText(entity.specialText(), entity.x, entity.y, 30, 'white'));
       }
     }
 
     const tileBelow = tiles[map[tx][ty + 1]];
 
-    if(tileBelow.solid) {
+    if(tileBelow.solid || entity.flying) {
       entity.j = 0;
     } else {
       // add an initial fall rotation

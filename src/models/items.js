@@ -29,9 +29,9 @@ const items = {
   },
   phone: {
     sprite: defineSprite(2, 3),
-    name: 'Mobile Phone',
+    name: 'Phone',
     color: '#3c3c3c',
-    description: 'x10 score',
+    description: 'This guy\'s rich!',
     level: 1,
     apply: function(player, state) {
       // increase this player's score by 10x
@@ -103,7 +103,7 @@ const items = {
     name: 'Sword',
     color: 'grey',
     level: 0,
-    description: 'Instakill Zombies',
+    description: 'Buy why?',
     apply: function(player, state) {
     }
   },
@@ -140,8 +140,13 @@ const items = {
     name: 'Jetpack',
     color: 'green',
     level: 0,
-    description: 'Going up!',
+    description: 'Flying humans!',
     apply: function(player, state) {
+      state.entities.forEach(entity => {
+        if(entity.name !== 'Zombie') {
+          entity.flying = true;
+        }
+      });
     }
   }
 }
