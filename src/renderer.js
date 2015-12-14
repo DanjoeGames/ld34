@@ -145,6 +145,23 @@ export default function Renderer(width, height, tilesize, getElement) {
         state.texts.delete(text);
       }
     });
+
+    state.bridges.forEach(bridge => {
+      c.font = `40px Purisa`;
+      c.textAlign = 'center';
+      if(bridge.extended) {
+        c.fillStyle = 'white';
+      } else {
+        c.fillStyle = 'grey';
+      }
+
+      const x = (bridge.x + bridge.length / 2) * ts;
+      const y = (bridge.y - 2) * ts;
+
+      c.fillText(String.fromCharCode(bridge.key), x, y);
+      c.font = `60px Purisa`;
+      c.fillText('▢', x, y);
+    });
   }
 
   let ticks = 0;

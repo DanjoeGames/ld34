@@ -1,8 +1,8 @@
 import defineSprite from '../util/define-sprite';
-import humans from '../models/humans';
+import randomProperty from '../util/random-property';
+import humans from './humans';
 
-export default {
-
+const items = {
   creditCard: {
     sprite: defineSprite(0, 3),
     name: 'Credit Card',
@@ -69,14 +69,12 @@ export default {
       });
     }
   },
-  briefcase: {
+  illuminati: {
     sprite: defineSprite(0, 4),
-    name: 'Briefcase',
-    color: '#444',
-    description: 'Not a long case!',
+    name: 'Illuminati',
+    color: '#38782d',
+    description: 'Confirmed!',
     apply: function(player, state) {
-      state.entities.forEach(entity => {
-      });
     }
   },
   scratchcard: {
@@ -98,10 +96,15 @@ export default {
   },
   die: {
     sprite: defineSprite(3, 4),
-    name: 'Die',
+    name: 'Luck',
     color: 'white',
-    description: '',
+    description: 'Items for everyone!',
     apply: function(player, state) {
+      state.entities.forEach(function(entity) {
+        if(entity.name !== 'Zombie' && !entity.item) {
+          entity.item = randomProperty(items);
+        }
+      });
     }
   },
   airstrike: {
@@ -127,3 +130,4 @@ export default {
   }
 }
 
+export default items;
