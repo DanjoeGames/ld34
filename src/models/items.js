@@ -114,9 +114,10 @@ const items = {
     description: 'Items for everyone!',
     level: 4,
     apply: function(player, state) {
+      const item = randomProperty(items);
       state.entities.forEach(function(entity) {
         if(entity.name !== 'Zombie' && !entity.item) {
-          entity.item = randomProperty(items);
+          entity.item = item;
         }
       });
     }
@@ -126,7 +127,7 @@ const items = {
     name: 'Airstrike',
     color: 'red',
     level: 4,
-    description: 'Instakill all zombies!',
+    description: 'No more zombies!',
     apply: function(player, state) {
       state.entities.forEach(entity => {
         if(entity.name === 'Zombie') {
@@ -140,7 +141,7 @@ const items = {
     name: 'Jetpack',
     color: 'green',
     level: 0,
-    description: 'Flying humans!',
+    description: 'Humans fly over gaps!',
     apply: function(player, state) {
       state.entities.forEach(entity => {
         if(entity.name !== 'Zombie') {
