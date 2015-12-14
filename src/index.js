@@ -178,7 +178,7 @@ function update() {
       state.texts.add(FloatingText(`${sign}$${num}`, entity.x, entity.y + 1, 50, color));
 
       if('specialText' in entity) {
-        state.texts.add(FloatingText(entity.specialText(), entity.x, entity.y, 30, 'white'));
+        state.texts.add(FloatingText(entity.specialText(), entity.x, entity.y - 1, 35, 'cyan'));
       }
     }
 
