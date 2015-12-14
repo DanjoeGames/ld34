@@ -32,7 +32,8 @@ const rightBridge = Bridge(4, 16, 5, { key: controls.RIGHT_BRIDGE });
 
 // Keep all game data in a single state container so that we can just
 // pass one thing to render
-const state = {
+
+export const state = {
   paused: true,
   entities: new Set(),
   bridges: [leftBridge, rightBridge],

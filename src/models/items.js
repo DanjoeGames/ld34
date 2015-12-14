@@ -8,6 +8,7 @@ const items = {
     name: 'Credit Card',
     color: '#0678c5',
     description: '2x multiplier',
+    level: 1,
     apply: function(player, state) {
       state.scoreMultipliers.apply(2, 60000);
     }
@@ -17,6 +18,7 @@ const items = {
     name: 'Energy Drink',
     color: '#a9d3ef',
     description: 'Speed humans up!',
+    level: 1,
     apply: function(player, state) {
       state.entities.forEach(entity => {
         if(entity.name != 'Zombie') {
@@ -30,6 +32,7 @@ const items = {
     name: 'Mobile Phone',
     color: '#3c3c3c',
     description: 'x10 score',
+    level: 1,
     apply: function(player, state) {
       // increase this player's score by 10x
       player.score *= 10;
@@ -39,6 +42,7 @@ const items = {
     sprite: defineSprite(3, 3),
     name: 'Jackpot',
     color: '#972828',
+    level: 3,
     description: 'What fine fellows!',
     apply: function(player, state) {
       state.entities.forEach(entity => {
@@ -51,6 +55,7 @@ const items = {
     sprite: defineSprite(4, 3),
     name: 'Burger',
     color: '#c9a45d',
+    level: 1,
     description: 'Does burger all.',
     apply: function(player, state) {
     }
@@ -60,6 +65,7 @@ const items = {
     name: 'Brainfreeze',
     color: '#47e57f',
     description: 'Slows all zombies',
+    level: 2,
     apply: function(player, state) {
       state.entities.forEach(entity => {
         // slow all zombies
@@ -74,6 +80,7 @@ const items = {
     name: 'Illuminati',
     color: '#38782d',
     description: 'Confirmed!',
+    level: 3,
     apply: function(player, state) {
       state.entities.forEach(entity => {
         Object.assign(entity, humans.priest);
@@ -86,6 +93,7 @@ const items = {
     name: 'Scratchcard',
     color: 'cyan',
     description: 'Did you win?',
+    level: 2,
     apply: function(player, state) {
       player.points = Math.floor(Math.random() * 10000);
     }
@@ -94,6 +102,7 @@ const items = {
     sprite: defineSprite(2, 4),
     name: 'Sword',
     color: 'grey',
+    level: 0,
     description: 'Instakill Zombies',
     apply: function(player, state) {
     }
@@ -103,6 +112,7 @@ const items = {
     name: 'Luck',
     color: 'white',
     description: 'Items for everyone!',
+    level: 4,
     apply: function(player, state) {
       state.entities.forEach(function(entity) {
         if(entity.name !== 'Zombie' && !entity.item) {
@@ -115,6 +125,7 @@ const items = {
     sprite: defineSprite(4, 4),
     name: 'Airstrike',
     color: 'red',
+    level: 4,
     description: 'Instakill all zombies!',
     apply: function(player, state) {
       state.entities.forEach(entity => {
@@ -128,6 +139,7 @@ const items = {
     sprite: defineSprite(5, 4),
     name: 'Jetpack',
     color: 'green',
+    level: 0,
     description: 'Going up!',
     apply: function(player, state) {
     }

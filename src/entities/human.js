@@ -2,8 +2,9 @@ import Entity from './';
 import humans from '../models/humans';
 import items from '../models/items';
 import randomProperty from '../util/random-property';
+import {state} from '../';
 
-export default function(x, y, i, j, state) {
+export default function(x, y, i, j) {
   const human = Object.create(Entity);
 
   const rarity = Math.random();
@@ -49,10 +50,26 @@ export default function(x, y, i, j, state) {
     }
   };
 
+
   if(Math.random() > 0.8) {
-    human.item = randomProperty(items);
+    human.item = randomProperty(get_possible_items(state.level));
+    // human.item = randomProperty(items);
   }
 
   return human;
 };
+
+var get_possible_items = function(level) {
+  var pool = {};
+
+  Object.keys(items).forEach(key => {
+
+    var item = items[key];
+    if(item.level <= level.number) {
+      pool[key] = item;
+      // Object.assign(pool[key], item);
+    }
+  });
+  return pool;
+}
 
