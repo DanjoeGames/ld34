@@ -1,14 +1,14 @@
 export default function Statistic() {
-  const stat = new Map();
+  const stat = {};
 
   return {
     value: () => stat,
     inc: (key) => {
-      const count = stat.get(key) || 0;
-      stat.set(key, count + 1);
+      const count = stat[key] || 0;
+      stat[key] = count + 1;
     },
     record: (key, val) => {
-      stat.set(key, val);
+      stat[key] = val;
     }
   };
 }

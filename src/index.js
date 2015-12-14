@@ -19,9 +19,6 @@ const tilesize = 50;
 const width = map.length * tilesize;
 const height = map[0].length * tilesize;
 
-const initialZombieLimit = 20;
-const intialHumanTarget = 30;
-
 const render = Renderer(width, height, tilesize, () => {
   return document.getElementById('game');
 });
@@ -30,21 +27,20 @@ const render = Renderer(width, height, tilesize, () => {
 // is down.
 const keyIsDown = KeyboardState();
 
-// not using the extends properties as the bridges are not currently
-// extendable, but might add it again, so I'll leave them here
-const leftBridge = Bridge(4, 7, 5, { extends: 'left' });
-const rightBridge = Bridge(4, 16, 5, { extends: 'right' });
+const leftBridge = Bridge(4, 7, 5, { key: controls.LEFT_BRIDGE });
+const rightBridge = Bridge(4, 16, 5, { key: controls.RIGHT_BRIDGE });
 
 // Keep all game data in a single state container so that we can just
 // pass one thing to render
 const state = {
-  paused: false,
+  paused: true,
   entities: new Set(),
   bridges: [leftBridge, rightBridge],
   texts: new Set(),
   scoreMultipliers: Multiplier(),
   statistics: Statistics(),
   showStats: false,
+  showIntro: true,
   map,
   points: 0,
   level: Level(0),
@@ -58,7 +54,9 @@ const leftSpawn = Spawner({
   y: 4,
   i: -1
 }, 1000, 0.9, entity => {
-  state.entities.add(entity);
+  if(entity.level <= state.level.number) {
+    state.entities.add(entity);
+  }
 });
 
 const rightSpawn = Spawner({
@@ -67,16 +65,19 @@ const rightSpawn = Spawner({
   y: 4,
   i: 1
 }, 1000, 0.9, entity => {
-  state.entities.add(entity);
+  if(entity.level <= state.level.number) {
+    state.entities.add(entity);
+  }
 });
 
 function update() {
   leftSpawn.spawn();
   rightSpawn.spawn();
 
-  if(state.zombiesTaken >= state.level.zombieLimit) {
+  if(state.zombiesTaken > state.level.zombieLimit) {
     //show level failure dialogue
-    state.level = Level(0);
+    state.gameOver = true;
+    state.paused = true;
   }
   if(state.humansSaved >= state.level.humanTarget) {
     //show next level dialogue when we get here
@@ -144,6 +145,10 @@ function update() {
     if(tileBehind.isLadder && !entity.isSafe) {
       state.statistics.saved.inc(entity.type);
 
+      if(entity.specialBehaviour) {
+        entity.specialBehaviour(entity, state);
+      }
+
       if(entity.name != 'Zombie') {
         state.humansSaved += 1;
 
@@ -170,6 +175,10 @@ function update() {
       const num = Math.abs(points);
       const sign = points >= 0 ? '+' : '-';
       state.texts.add(FloatingText(`${sign}$${num}`, entity.x, entity.y, 50, color));
+
+      if('specialText' in entity) {
+        state.texts.add(FloatingText(entity.specialText(), entity.x, entity.y - 1, 30, 'white'));
+      }
     }
 
     const tileBelow = tiles[map[tx][ty + 1]];
@@ -200,6 +209,11 @@ function animate() {
     render(state);
   }
 }
+
+// update once to kick off dialogue
+update();
+render(state);
+// this must happen other buttons won't work
 
 animate();
 

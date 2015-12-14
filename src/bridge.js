@@ -8,6 +8,7 @@ export default function Bridge(length, x, y, config) {
   bridge.x = x;
   bridge.y = y;
   bridge.extended = true;
+  bridge.key = config.key;
 
   bridge.extend = () => bridge.extended = true;
   bridge.retract = () => bridge.extended = false;

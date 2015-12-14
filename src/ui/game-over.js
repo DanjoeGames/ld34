@@ -1,27 +1,22 @@
 import Container from './container';
 import Dialogue from './dialogue';
 import Element from '../util/element';
+import Level from '../level';
 
 const div = Element.partial('div');
 const span = Element.partial('span');
 const h2 = Element.partial('h2');
 const button = Element.partial('button');
-const strong = Element.partial('strong');
-const img = Element.partial('img');
+const p = Element.partial('p');
 
 export default Container(function() {
-  function makeMenuItem(title) {
-    return div({ class: 'menu__item' }, [
-      button({ class: 'menu__item__button' }, [title])
-    ]);
-  }
-
-  const play = makeMenuItem('Play');
+  const retry = button({ class: 'dialogue__button' }, 'Retry >');
 
   const dialogue = Dialogue(
     div({ class: 'menu' }, [
-      h2({}, ['Zombridge']),
-      play
+      h2({}, ['Game Over']),
+      p({}, 'You let in too many zombies!'),
+      retry
     ])
   );
 
@@ -31,12 +26,17 @@ export default Container(function() {
       return dialogue;
     },
     update(state) {
-      play.on('click', () => {
-        state.showMenu = false;
+      retry.on('click', () => {
+        state.gameOver = false;
+        state.level = Level(1);
         state.paused = false;
+        state.zombiesTaken = 0;
+        state.humansSaved = 0;
+        state.entities.clear();
+        state.points = 0;
       });
 
-      if(state.showMenu) {
+      if(state.gameOver) {
         dialogue.style.display = 'block';
       } else {
         dialogue.style.display = 'none';

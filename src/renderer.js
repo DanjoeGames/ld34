@@ -5,6 +5,8 @@ import tiletypes from './constants/tiles';
 import status from './ui/status';
 import menu from './ui/menu';
 import stats from './ui/stats';
+import instructions from './ui/instructions';
+import gameOver from './ui/game-over';
 
 const spritesheet = new Image();
 spritesheet.src = 'assets/sprites.png';
@@ -41,6 +43,8 @@ export default function Renderer(width, height, tilesize, getElement) {
   container.appendChild(status.create());
   container.appendChild(stats.create());
   container.appendChild(menu.create());
+  container.appendChild(instructions.create());
+  container.appendChild(gameOver.create());
 
   container.style.position = 'relative';
   drowned.canvas.style.backgroundImage = 'url(assets/background.png)';
@@ -145,6 +149,23 @@ export default function Renderer(width, height, tilesize, getElement) {
         state.texts.delete(text);
       }
     });
+
+    state.bridges.forEach(bridge => {
+      c.font = `40px Purisa`;
+      c.textAlign = 'center';
+      if(bridge.extended) {
+        c.fillStyle = 'white';
+      } else {
+        c.fillStyle = 'grey';
+      }
+
+      const x = (bridge.x + bridge.length / 2) * ts;
+      const y = (bridge.y - 2) * ts;
+
+      c.fillText(String.fromCharCode(bridge.key), x, y);
+      c.font = `60px Purisa`;
+      c.fillText('▢', x, y);
+    });
   }
 
   let ticks = 0;
@@ -174,6 +195,8 @@ export default function Renderer(width, height, tilesize, getElement) {
     status.update(state);
     stats.update(state);
     menu.update(state);
+    instructions.update(state);
+    gameOver.update(state);
   };
 }
 

@@ -1,9 +1,9 @@
 const HARDCODED_LEVELS = [
-  { humanTarget: 20, zombieLimit: 0 }
+  { humanTarget: 5, zombieLimit: 0 }
 ];
 
-const initialHumanTarget = 20;
-const initialZombieLimit = 10;
+const initialHumanTarget = 10;
+const initialZombieLimit = 5;
 
 export default function Level(n) {
   const level = {};
@@ -12,7 +12,7 @@ export default function Level(n) {
     Object.assign(level, HARDCODED_LEVELS[n]);
   } else {
     level.humanTarget = initialHumanTarget + (n * 20);
-    level.zombieLimit = initialZombieLimit + (n * 5);
+    level.zombieLimit = initialZombieLimit + (n * 3);
   }
 
   level.number = n;
