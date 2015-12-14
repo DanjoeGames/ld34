@@ -35,7 +35,7 @@ export default Container(function() {
       level.innerText = state.level.number;
       money.innerText = state.points;
       humans.innerText = `${state.humansSaved} / ${state.level.humanTarget}`;
-      zombies.innerText = `${state.zombiesTaken} / ${state.level.zombieLimit}`;
+      zombies.innerText = `${state.level.zombieLimit - state.zombiesTaken}`;
       multiplier.src = `assets/x${state.scoreMultipliers.multiplier()}.png`;
     }
   };

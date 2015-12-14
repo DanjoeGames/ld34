@@ -5,6 +5,8 @@ import tiletypes from './constants/tiles';
 import status from './ui/status';
 import menu from './ui/menu';
 import stats from './ui/stats';
+import instructions from './ui/instructions';
+import gameOver from './ui/game-over';
 
 const spritesheet = new Image();
 spritesheet.src = 'assets/sprites.png';
@@ -41,6 +43,8 @@ export default function Renderer(width, height, tilesize, getElement) {
   container.appendChild(status.create());
   container.appendChild(stats.create());
   container.appendChild(menu.create());
+  container.appendChild(instructions.create());
+  container.appendChild(gameOver.create());
 
   container.style.position = 'relative';
   drowned.canvas.style.backgroundImage = 'url(assets/background.png)';
@@ -191,6 +195,8 @@ export default function Renderer(width, height, tilesize, getElement) {
     status.update(state);
     stats.update(state);
     menu.update(state);
+    instructions.update(state);
+    gameOver.update(state);
   };
 }
 
