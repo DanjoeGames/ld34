@@ -103,7 +103,7 @@ const items = {
     name: 'Sword',
     color: 'grey',
     level: 0,
-    description: 'Buy why?',
+    description: 'But why?',
     apply: function(player, state) {
     }
   },
