@@ -4,7 +4,7 @@ import humans from '../models/humans';
 export default {
 
   creditCard: {
-    sprite: defineSprite(0, 2),
+    sprite: defineSprite(0, 3),
     name: 'Credit Card',
     color: '#0678c5',
     description: '2x multiplier',
@@ -13,7 +13,7 @@ export default {
     }
   },
   redbull: {
-    sprite: defineSprite(1, 2),
+    sprite: defineSprite(1, 3),
     name: 'Energy Drink',
     color: '#a9d3ef',
     description: 'Speed humans up!',
@@ -26,7 +26,7 @@ export default {
     }
   },
   phone: {
-    sprite: defineSprite(2, 2),
+    sprite: defineSprite(2, 3),
     name: 'Mobile Phone',
     color: '#3c3c3c',
     description: 'x10 score',
@@ -36,7 +36,7 @@ export default {
     }
   },
   jackpot: {
-    sprite: defineSprite(3, 2),
+    sprite: defineSprite(3, 3),
     name: 'Jackpot',
     color: '#972828',
     description: 'What fine fellows!',
@@ -48,7 +48,7 @@ export default {
     }
   },
   burger: {
-    sprite: defineSprite(4, 2),
+    sprite: defineSprite(4, 3),
     name: 'Burger',
     color: '#c9a45d',
     description: 'Does burger all.',
@@ -56,7 +56,7 @@ export default {
     }
   },
   icecream: {
-    sprite: defineSprite(5, 2),
+    sprite: defineSprite(5, 3),
     name: 'Brainfreeze',
     color: '#47e57f',
     description: 'Slows all zombies',
@@ -68,6 +68,25 @@ export default {
         }
       });
     }
-  }
+  },
+  briefcase: {
+    sprite: defineSprite(0, 4),
+    name: 'Briefcase',
+    color: '#444',
+    description: 'Not a long case!',
+    apply: function(player, state) {
+      state.entities.forEach(entity => {
+      });
+    }
+  },
+  scratchcard: {
+    sprite: defineSprite(1, 4),
+    name: 'Scratchcard',
+    color: 'cyan',
+    description: 'Did you win?',
+    apply: function(player, state) {
+      player.points = Math.floor(Math.random() * 10000);
+    }
+  },
 }
 

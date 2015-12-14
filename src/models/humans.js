@@ -11,6 +11,11 @@ export default {
   chef:       { sprite: defineSprite(1, 1), points: 9,  type: 'chef',       name: 'Chef' },
   artist:     { sprite: defineSprite(2, 1), points: 4,  type: 'artist',     name: 'Artist' },
   streaker:   { sprite: defineSprite(3, 1), points: 0,  type: 'streaker',   name: 'Streaker' },
-  baby:       { sprite: defineSprite(4, 1), points: 6,  type: 'baby',       name: 'Baby' }
+  baby:       { sprite: defineSprite(4, 1), points: 6,  type: 'baby',       name: 'Baby' },
+  snow:       { sprite: defineSprite(0, 2), points: 10000,  type: 'snow',   secret: true, name: 'Snow' },
+  jesus:      { sprite: defineSprite(1, 2), points: 20000,  type: 'jesus',  secret: true, name: 'Jesus' },
+  jones:      { sprite: defineSprite(2, 2), points: 5000,   type: 'jones',  secret: true, name: 'Jones' },
+  gandalf:    { sprite: defineSprite(3, 2), points: 15000,  type: 'gandalf',secret: true, name: 'Gandalf' },
+  jules:      { sprite: defineSprite(4, 2), points: 15000,  type: 'jules',  secret: true, name: 'Jules' }
 }
 
