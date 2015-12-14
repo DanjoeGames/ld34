@@ -1,8 +1,8 @@
 const HARDCODED_LEVELS = [
-  { humanTarget: 20, zombieLimit: 0 }
+  { humanTarget: 5, zombieLimit: 0 }
 ];
 
-const initialHumanTarget = 20;
+const initialHumanTarget = 10;
 const initialZombieLimit = 10;
 
 export default function Level(n) {

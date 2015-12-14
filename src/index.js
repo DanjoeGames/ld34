@@ -36,13 +36,14 @@ const rightBridge = Bridge(4, 16, 5, { key: controls.RIGHT_BRIDGE });
 // Keep all game data in a single state container so that we can just
 // pass one thing to render
 const state = {
-  paused: false,
+  paused: true,
   entities: new Set(),
   bridges: [leftBridge, rightBridge],
   texts: new Set(),
   scoreMultipliers: Multiplier(),
   statistics: Statistics(),
   showStats: false,
+  showIntro: true,
   map,
   points: 0,
   level: Level(0),
@@ -210,6 +211,11 @@ function animate() {
     render(state);
   }
 }
+
+// update once to kick off dialogue
+update();
+render(state);
+// this must happen other buttons won't work
 
 animate();
 
