@@ -16,38 +16,50 @@ export default Container(function() {
     return div({ class: 'menu__item' }, btn);
   }
 
+  function isSecretCharacter(type) {
+    return humans[type].secret;
+  }
+
+  function isRegularCharacter(type) {
+    return !isSecretCharacter(type);
+  }
+
   // button that advances the screen
   const nextButton = makeButton('Next >');
 
-
   const humanTypes = Object.keys(humans);
 
-  const survivorValues = humanTypes.reduce((stats, type) => {
-    stats[type] = span({ class: 'stat__value' }, 0);
-    return stats;
-  }, {});
+  const survivorValues = humanTypes
+    // don't show secret characters!!!
+    .filter(isRegularCharacter)
+    .reduce((stats, type) => {
+      stats[type] = span({ class: 'stat__value' }, 0);
+      return stats;
+    }, {});
 
-  const survivorStats = humanTypes.map(type => {
-    const human = humans[type];
-    const spriteSize = 50;
-    const sprite = div({ class: 'sprite' });
+  const survivorStats = humanTypes
+    .filter(isRegularCharacter)
+    .map(type => {
+      const human = humans[type];
+      const spriteSize = 50;
+      const sprite = div({ class: 'sprite' });
 
-    // CSS background position moves the image rather than moving
-    // the origin, so we need to use negative values to account
-    // for that.
-    Element.createStyles({
-      backgroundImage: `url(assets/sprites.png)`,
-      backgroundPositionX: -human.sprite.x * spriteSize + 'px',
-      backgroundPositionY: -human.sprite.y * spriteSize + 'px',
-      height: spriteSize + 'px',
-      width: spriteSize + 'px'
-    })(sprite);
+      // CSS background position moves the image rather than moving
+      // the origin, so we need to use negative values to account
+      // for that.
+      Element.createStyles({
+        backgroundImage: `url(assets/sprites.png)`,
+        backgroundPositionX: -human.sprite.x * spriteSize + 'px',
+        backgroundPositionY: -human.sprite.y * spriteSize + 'px',
+        height: spriteSize + 'px',
+        width: spriteSize + 'px'
+      })(sprite);
 
-    return div({ class: 'stat' }, [
-      sprite,
-      survivorValues[type]
-    ]);
-  });
+      return div({ class: 'stat' }, [
+        sprite,
+        survivorValues[type]
+      ]);
+    });
 
   const dialogue =  Dialogue(
     div({ class: 'menu' }, [
@@ -71,7 +83,9 @@ export default Container(function() {
       });
 
       stats.forEach((value, type) => {
-        survivorValues[type].innerText = value;
+        if(!humans[type].secret) {
+          survivorValues[type].innerText = value;
+        }
       });
 
       if(state.showStats) {
