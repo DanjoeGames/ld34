@@ -12,6 +12,8 @@ import { FloatingText } from './text';
 import KeyboardState from './input';
 import chance from './util/chance';
 import Multiplier from './multiplier';
+import Statistics from './statistics';
+import Level from './level';
 
 const tilesize = 50;
 const width = map.length * tilesize;
@@ -41,9 +43,10 @@ const state = {
   bridges: [leftBridge, rightBridge],
   texts: new Set(),
   scoreMultipliers: Multiplier(),
+  statistics: Statistics(),
   map,
   points: 0,
-  currentLevel: 0,
+  level: Level(0),
   humansSaved: 0,
   zombiesTaken: 0
 };
@@ -68,13 +71,27 @@ const rightSpawn = Spawner({
 
 function update() {
 
-  if(state.zombiesTaken >= initialZombieLimit - (state.currentLevel * 2)) {
+  console.log(state.humansSaved >= state.level.humanTarget);
+  if(state.zombiesTaken >= state.level.zombieLimit) {
     //show level failure dialogue
-  } else if(state.humansSaved >= intialHumanTarget + (state.currentLevel * 20)) {
+  }
+  if(state.humansSaved >= state.level.humanTarget) {
     //show next level dialogue when we get here
-    state.currentLevel ++;
+    //
+
+    // reset all entities
     state.entities.clear();
-    //state.points = 0;
+
+    // reset stats
+    state.statistics = Statistics();
+
+    // advance to next level
+    state.level = state.level.next();
+    console.log(state.level);
+
+    // reset goals
+    state.humansSaved = 0;
+    state.zombiesTaken = 0;
   }
 
   // update bridge state based on controls
@@ -110,9 +127,13 @@ function update() {
       // landing on the wall bugs
       entity.j = 0;
       entity.i = 0;
+
+      state.statistics.died.inc(entity.type);
     }
 
     if(tileBehind.isLadder && !entity.isSafe) {
+      state.statistics.saved.inc(entity.type);
+
       if(entity.name != 'Zombie') {
         state.humansSaved += 1;
 
@@ -127,13 +148,14 @@ function update() {
         state.zombiesTaken += 1;
       }
 
+      // remove entity from game
       state.entities.delete(entity);
 
-      entity.isSafe = true;
-
+      // apply score taking multipliers into account
       const points = entity.points * state.scoreMultipliers.multiplier();
       state.points += points;
 
+      // show some text to represent the score
       const color = points >= 0 ? '#c6db06' : 'red';
       const num = Math.abs(points);
       const sign = points >= 0 ? '+' : '-';
@@ -141,6 +163,7 @@ function update() {
     }
 
     const tileBelow = tiles[map[tx][ty + 1]];
+
     if(tileBelow.solid) {
       entity.j = 0;
     } else {

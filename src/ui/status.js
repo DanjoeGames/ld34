@@ -32,9 +32,9 @@ export default Container(function() {
       ]);
     },
     update(state) {
-      level.innerText = state.currentLevel;
+      level.innerText = state.level.number;
       money.innerText = state.points;
-      humans.innerText = state.humansSaved;
+      humans.innerText = `${state.humansSaved} / ${state.level.humanTarget}`;
       zombies.innerText = state.zombiesTaken;
       multiplier.src = `assets/x${state.scoreMultipliers.multiplier()}.png`;
     }
