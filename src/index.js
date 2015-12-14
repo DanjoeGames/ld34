@@ -176,6 +176,10 @@ function update() {
       const num = Math.abs(points);
       const sign = points >= 0 ? '+' : '-';
       state.texts.add(FloatingText(`${sign}$${num}`, entity.x, entity.y, 50, color));
+
+      if('specialText' in entity) {
+        state.texts.add(FloatingText(entity.specialText(), entity.x, entity.y - 1, 30, 'white'));
+      }
     }
 
     const tileBelow = tiles[map[tx][ty + 1]];
