@@ -83,7 +83,7 @@ export default Container(function() {
       });
 
       stats.forEach((value, type) => {
-        if(!humans[type].secret) {
+        if(type in humans && !humans[type].secret) {
           survivorValues[type].innerText = value;
         }
       });
