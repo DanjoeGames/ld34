@@ -10,14 +10,13 @@ const button = Element.partial('button');
 const img = Element.partial('button');
 
 export default Container(function() {
-  function makeButton(text, onclick) {
+  function makeButton(text) {
     const btn = button({ class: 'dialogue__button' }, text);
-    btn.on('click', onclick);
 
     return div({ class: 'menu__item' }, btn);
   }
 
-  const nextButton = makeButton('Next >', () => {});
+  const nextButton = makeButton('Next >');
 
   const humanTypes = Object.keys(humans);
 
@@ -48,22 +47,36 @@ export default Container(function() {
     ]);
   });
 
+  const dialogue =  Dialogue(
+    div({ class: 'menu' }, [
+      h2({}, 'Level Complete'),
+      div({ class: 'stats' }, survivorStats),
+      div({}, nextButton)
+    ])
+  );
+
   return {
     create() {
-      return Dialogue(
-        div({ class: 'menu' }, [
-          h2({}, 'Level Complete'),
-          div({ class: 'stats' }, survivorStats),
-          div({}, nextButton)
-        ])
-      );
+      dialogue.style.display = 'none';
+      return dialogue;
     },
     update(state) {
       const stats = state.statistics.saved.value();
 
+      nextButton.on('click', () => {
+        state.paused = false;
+        state.showStats = false;
+      });
+
       stats.forEach((value, type) => {
         survivorValues[type].innerText = value;
       });
+
+      if(state.showStats) {
+        dialogue.style.display = 'block';
+      } else {
+        dialogue.style.display = 'none';
+      }
     }
   };
 });

@@ -44,6 +44,7 @@ const state = {
   texts: new Set(),
   scoreMultipliers: Multiplier(),
   statistics: Statistics(),
+  showStats: false,
   map,
   points: 0,
   level: Level(0),
@@ -88,6 +89,9 @@ function update() {
     // advance to next level
     state.level = state.level.next();
     console.log(state.level);
+
+    state.showStats = true;
+    state.paused = true;
 
     // reset goals
     state.humansSaved = 0;
@@ -187,8 +191,8 @@ function animate() {
   setTimeout(animate, 50);
   if(!state.paused) {
     update();
+    render(state);
   }
-  render(state);
 }
 
 animate();
