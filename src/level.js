@@ -12,7 +12,7 @@ export default function Level(n) {
     Object.assign(level, HARDCODED_LEVELS[n]);
   } else {
     level.humanTarget = initialHumanTarget + (n * 20);
-    level.zombieLimit = initialZombieLimit + (n * 5);
+    level.zombieLimit = initialZombieLimit + (n * 3);
   }
 
   level.number = n;

@@ -14,9 +14,9 @@ export default {
   streaker:   { level: 3, rarity: .1, sprite: defineSprite(3, 1), points: 0,  type: 'streaker',   name: 'Streaker' },
   baby:       { level: 3, rarity: .1, sprite: defineSprite(4, 1), points: 6,  type: 'baby',       name: 'Baby' },
   priest:     { level: 10, rarity: .1,  sprite: defineSprite(5, 2), points: -100,   type: 'priest',  secret: true, name: 'Priest' },
-  snow:       { level: 0, rarity: .5,  sprite: defineSprite(0, 2), points: 10000,  type: 'snow',    secret: true, name: 'Snow', specialText:  quotes('snow') },
-  jesus:      { level: 0, rarity: .1,  sprite: defineSprite(1, 2), points: 20000,  type: 'jesus',   secret: true, name: 'Jesus', specialText: quotes('jesus') },
-  jones:      { level: 0, rarity: .5,  sprite: defineSprite(2, 2), points: 5000,   type: 'jones',   secret: true, name: 'Jones', specialText: quotes('jones') },
-  gandalf:    { level: 0, rarity: .3,  sprite: defineSprite(3, 2), points: 15000,  type: 'gandalf', secret: true, name: 'Gandalf', specialText: quotes('gandalf') },
-  jules:      { level: 0, rarity: .3,  sprite: defineSprite(4, 2), points: 15000,  type: 'jules',   secret: true, name: 'Jules', specialText: quotes('jules') }
+  snow:       { level: 0, rarity: .05,  sprite: defineSprite(0, 2), points: 10000,  type: 'snow',    secret: true, name: 'Snow', specialText:  quotes('snow') },
+  jesus:      { level: 0, rarity: .01,  sprite: defineSprite(1, 2), points: 20000,  type: 'jesus',   secret: true, name: 'Jesus', specialText: quotes('jesus') },
+  jones:      { level: 0, rarity: .05,  sprite: defineSprite(2, 2), points: 5000,   type: 'jones',   secret: true, name: 'Jones', specialText: quotes('jones') },
+  gandalf:    { level: 0, rarity: .03,  sprite: defineSprite(3, 2), points: 15000,  type: 'gandalf', secret: true, name: 'Gandalf', specialText: quotes('gandalf') },
+  jules:      { level: 0, rarity: .03,  sprite: defineSprite(4, 2), points: 15000,  type: 'jules',   secret: true, name: 'Jules', specialText: quotes('jules') }
 }
