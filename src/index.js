@@ -1,3 +1,4 @@
+import 'core-js';
 import tiletypes from './constants/tiles';
 import controls from './constants/controls';
 import tiles from './models/tiles';

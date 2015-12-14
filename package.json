@@ -38,6 +38,7 @@
     "watchify": "^3.6.1"
   },
   "dependencies": {
+    "core.js": "^0.4.2",
     "improvise": "0.0.0",
     "pixi.js": "^3.0.8"
   }

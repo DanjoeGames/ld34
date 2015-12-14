@@ -82,7 +82,8 @@ export default Container(function() {
         state.showStats = false;
       });
 
-      stats.forEach((value, type) => {
+      Object.keys(stats).forEach(type => {
+        const value = stats[type];
         if(type in humans && !humans[type].secret) {
           survivorValues[type].innerText = value;
         }
