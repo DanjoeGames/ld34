@@ -14,6 +14,7 @@ export default function(x, y, i, j) {
   human.i = i;
   human.j = j;
   human.speed = 0.1;
+  human.rotation = 0;
 
   human.falling = false;
 

@@ -10,6 +10,7 @@ import Entity from './entities';
 import Bridge from './bridge';
 import { FloatingText } from './text';
 import KeyboardState from './input';
+import chance from './util/chance';
 
 const tilesize = 50;
 const width = map.length * tilesize;
@@ -134,11 +135,15 @@ function update() {
     const tileBelow = tiles[map[tx][ty + 1]];
     if(tileBelow.solid) {
       entity.j = 0;
-      entity.falling = false;
     } else {
-      entity.falling = true;
+      // add an initial fall rotation
+      if(entity.rotation === 0) {
+        entity.rotation = chance(0.5) ? Math.random() / 10 : -Math.random() / 10;
+      }
+
       entity.j += 0.1;
       entity.i = 0;
+      entity.rotation *= 1.3;
     }
 
     // apply movement - could be moved t prototype

@@ -52,17 +52,14 @@ export default function Renderer(width, height, tilesize, getElement) {
     const sx = x * ts;
     const sy = y * ts;
 
-    return function(c, x, y, dingosAteMyBaby) {
+    return function(c, x, y, rotation) {
       const dx = x * ts;
       const dy = y * ts;
 
       c.save();
 
       c.translate(dx, dy);
-
-      if(dingosAteMyBaby) {
-        c.scale(1, -1);
-      }
+      c.rotate(rotation);
 
       c.drawImage(spritesheet,
           sx, sy, ts, ts,
@@ -102,11 +99,11 @@ export default function Renderer(width, height, tilesize, getElement) {
 
 
       drawSprite(entity.sprite.x, entity.sprite.y)
-        (c, animPos.x, animPos.y, entity.falling);
+        (c, animPos.x, animPos.y, entity.rotation);
 
       if('item' in entity) {
         drawSprite(entity.item.sprite.x, entity.item.sprite.y)
-          (c, animPos.x + 0.3, animPos.y - 0.3, entity.falling);
+          (c, animPos.x + 0.3, animPos.y - 0.3, entity.rotation);
       }
     });
 

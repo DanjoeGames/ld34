@@ -14,8 +14,7 @@ export default function(x, y, i=0, j=0) {
   zombie.j = j;
   zombie.speed = 0.05;
   zombie.itemName = "NoItem";
-
-  zombie.falling = false;
+  zombie.rotation = 0;
 
   zombie.animation = {
     cycleFrames: 5,
