@@ -3,7 +3,7 @@ import humans from '../models/humans';
 import items from '../models/items';
 import randomProperty from '../util/random-property';
 
-export default function(x, y, i, j) {
+export default function(x, y, i, j, state) {
   const human = Object.create(Entity);
 
   const rarity = Math.random();
@@ -49,7 +49,7 @@ export default function(x, y, i, j) {
     }
   };
 
-  if(Math.random() > 0.9) {
+  if(Math.random() > 0.8) {
     human.item = randomProperty(items);
   }
 

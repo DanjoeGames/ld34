@@ -30,10 +30,8 @@ const render = Renderer(width, height, tilesize, () => {
 // is down.
 const keyIsDown = KeyboardState();
 
-// not using the extends properties as the bridges are not currently
-// extendable, but might add it again, so I'll leave them here
-const leftBridge = Bridge(4, 7, 5, { extends: 'left' });
-const rightBridge = Bridge(4, 16, 5, { extends: 'right' });
+const leftBridge = Bridge(4, 7, 5, { key: controls.LEFT_BRIDGE });
+const rightBridge = Bridge(4, 16, 5, { key: controls.RIGHT_BRIDGE });
 
 // Keep all game data in a single state container so that we can just
 // pass one thing to render
@@ -58,7 +56,9 @@ const leftSpawn = Spawner({
   y: 4,
   i: -1
 }, 1000, 0.9, entity => {
-  state.entities.add(entity);
+  if(entity.level <= state.level.number) {
+    state.entities.add(entity);
+  }
 });
 
 const rightSpawn = Spawner({
@@ -67,7 +67,9 @@ const rightSpawn = Spawner({
   y: 4,
   i: 1
 }, 1000, 0.9, entity => {
-  state.entities.add(entity);
+  if(entity.level <= state.level.number) {
+    state.entities.add(entity);
+  }
 });
 
 function update() {
@@ -143,6 +145,10 @@ function update() {
 
     if(tileBehind.isLadder && !entity.isSafe) {
       state.statistics.saved.inc(entity.type);
+
+      if(entity.specialBehaviour) {
+        entity.specialBehaviour(entity, state);
+      }
 
       if(entity.name != 'Zombie') {
         state.humansSaved += 1;
