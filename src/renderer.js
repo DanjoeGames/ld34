@@ -26,23 +26,24 @@ export function makeRenderingContext(width, height) {
 }
 
 export default function Renderer(width, height, tilesize, getElement) {
-  const drowned = makeRenderingContext(width, height);
+  const water = makeRenderingContext(width, height);
   const fg = makeRenderingContext(width, height);
+  const drowned = makeRenderingContext(width, height);
   const bg = makeRenderingContext(width, height);
 
   // contain the canvases inside a container div
   const container = document.createElement('div');
-  container.appendChild(bg.canvas);
   container.appendChild(drowned.canvas);
   container.appendChild(fg.canvas);
+  container.appendChild(water.canvas);
+  container.appendChild(bg.canvas);
 
   container.appendChild(status.create());
   container.appendChild(stats.create());
-  // menu isn't working
-  //container.appendChild(menu.create());
+  container.appendChild(menu.create());
 
   container.style.position = 'relative';
-  bg.canvas.style.backgroundImage = 'url(assets/background.png)';
+  drowned.canvas.style.backgroundImage = 'url(assets/background.png)';
 
   // use the onload util method to prevent race conditions
   onLoad(() => {
@@ -146,14 +147,33 @@ export default function Renderer(width, height, tilesize, getElement) {
     });
   }
 
+  let ticks = 0;
+  function waves() {
+    ticks += 1;
+    const c = water.context;
+    c.clearRect(0, 0, width, height);
+    c.fillStyle = 'rgba(44, 113, 160, 0.6)';
+    c.beginPath();
+    c.moveTo(0, 500)
+    for(var i = 0; i < width; i++) {
+      c.lineTo(i, 500 + (Math.sin((i + ticks) / 10) * 10));
+    }
+    c.lineTo(width, height);
+    c.lineTo(0, height);
+    c.fill();
+    c.stroke();
+  }
+
   // the main render function - should only be extended if we
   // introduce more layers or more complex rules for when certain
   // layers need to be re-rendered
   return function(state) {
     background(state);
     foreground(state);
+    waves();
     status.update(state);
     stats.update(state);
+    menu.update(state);
   };
 }
 

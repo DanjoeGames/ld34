@@ -18,26 +18,39 @@ export default Container(function() {
   const help = makeMenuItem('Help');
   const achievements = makeMenuItem('Achievements');
 
-  play.on('click', () => {
-    console.log('Play');
-  });
-
-  help.on('click', () => {
-    console.log('HElp');
-  });
+  const dialogue = Dialogue(
+    div({ class: 'menu' }, [
+      h2({}, ['Zombridge']),
+      play,
+      help,
+      achievements
+    ])
+  );
 
   return {
     create() {
-      return Dialogue(
-        div({ class: 'menu' }, [
-          h2({}, ['Zombridge']),
-          play,
-          help,
-          achievements
-        ])
-      );
+      dialogue.style.display = 'none';
+      return dialogue;
     },
     update(state) {
+      play.on('click', () => {
+        state.showMenu = false;
+        state.paused = false;
+      });
+
+      help.on('click', () => {
+        state.showMenu = false;
+      });
+
+      achievements.on('click', () => {
+        state.showMenu = false;
+      });
+
+      if(state.showMenu) {
+        dialogue.style.display = 'block';
+      } else {
+        dialogue.style.display = 'none';
+      }
     }
   };
 });

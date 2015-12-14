@@ -97,6 +97,11 @@ function update() {
     state.zombiesTaken = 0;
   }
 
+  if(keyIsDown(controls.MAIN_MENU)) {
+    state.showMenu = true;
+    state.paused = true;
+  }
+
   // update bridge state based on controls
   if(keyIsDown(controls.LEFT_BRIDGE)) {
     leftBridge.extend();
