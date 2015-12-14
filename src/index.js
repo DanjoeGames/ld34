@@ -142,6 +142,10 @@ function update() {
     if(tileBehind.isLadder && !entity.isSafe) {
       state.statistics.saved.inc(entity.type);
 
+      if(entity.specialBehaviour) {
+        entity.specialBehaviour(entity, state);
+      }
+
       if(entity.name != 'Zombie') {
         state.humansSaved += 1;
 

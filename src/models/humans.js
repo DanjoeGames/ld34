@@ -12,9 +12,10 @@ export default {
   artist:     { rarity: .9, sprite: defineSprite(2, 1), points: 4,  type: 'artist',     name: 'Artist' },
   streaker:   { rarity: .1, sprite: defineSprite(3, 1), points: 0,  type: 'streaker',   name: 'Streaker' },
   baby:       { rarity: .1, sprite: defineSprite(4, 1), points: 6,  type: 'baby',       name: 'Baby' },
-  snow:       { rarity: .05,  sprite: defineSprite(0, 2), points: 10000,  type: 'snow',   secret: true, name: 'Snow' },
-  jesus:      { rarity: .01, sprite: defineSprite(1, 2), points: 20000,  type: 'jesus',  secret: true, name: 'Jesus' },
-  jones:      { rarity: .05,  sprite: defineSprite(2, 2), points: 5000,   type: 'jones',  secret: true, name: 'Jones' },
-  gandalf:    { rarity: .03, sprite: defineSprite(3, 2), points: 15000,  type: 'gandalf',secret: true, name: 'Gandalf' },
-  jules:      { rarity: .03, sprite: defineSprite(4, 2), points: 15000,  type: 'jules',  secret: true, name: 'Jules' }
+  priest:     { rarity:   0,  sprite: defineSprite(5, 2), points: -100,   type: 'priest',  secret: true, name: 'Priest' },
+  snow:       { rarity: .05,  sprite: defineSprite(0, 2), points: 10000,  type: 'snow',    secret: true, name: 'Snow' },
+  jesus:      { rarity: .01,  sprite: defineSprite(1, 2), points: 20000,  type: 'jesus',   secret: true, name: 'Jesus' },
+  jones:      { rarity: .05,  sprite: defineSprite(2, 2), points: 5000,   type: 'jones',   secret: true, name: 'Jones' },
+  gandalf:    { rarity: .03,  sprite: defineSprite(3, 2), points: 15000,  type: 'gandalf', secret: true, name: 'Gandalf' },
+  jules:      { rarity: .03,  sprite: defineSprite(4, 2), points: 15000,  type: 'jules',   secret: true, name: 'Jules' }
 }

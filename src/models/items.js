@@ -75,6 +75,10 @@ const items = {
     color: '#38782d',
     description: 'Confirmed!',
     apply: function(player, state) {
+      state.entities.forEach(entity => {
+        Object.assign(entity, humans.priest);
+        entity.item = items.illuminati;
+      });
     }
   },
   scratchcard: {
