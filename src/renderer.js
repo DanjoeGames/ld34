@@ -97,7 +97,6 @@ export default function Renderer(width, height, tilesize, getElement) {
         animPos = entity.animation.displaceSprite(entity.x, entity.y);
       }
 
-
       drawSprite(entity.sprite.x, entity.sprite.y)
         (c, animPos.x, animPos.y, entity.rotation);
 
@@ -108,8 +107,6 @@ export default function Renderer(width, height, tilesize, getElement) {
     });
 
     state.texts.forEach(text => {
-      if(text.dead) return;
-
       c.font = `${text.size}px Purisa`;
       c.textAlign = 'center';
       c.lineColor = 'black';
@@ -119,7 +116,7 @@ export default function Renderer(width, height, tilesize, getElement) {
       text.age -= 1;
 
       if(text.age <= 0) {
-        text.dead = true;
+        state.texts.delete(text);
       }
     });
   }

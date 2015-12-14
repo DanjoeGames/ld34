@@ -37,9 +37,9 @@ const rightBridge = Bridge(4, 16, 5, { extends: 'right' });
 // pass one thing to render
 const state = {
   paused: false,
-  entities: [],
+  entities: new Set(),
   bridges: [leftBridge, rightBridge],
-  texts: [],
+  texts: new Set(),
   scoreMultipliers: Multiplier(),
   map,
   points: 0,
@@ -50,31 +50,31 @@ const state = {
 
 const leftSpawn = Spawner({
   generateEntity: Entity.oneOf(Human, Zombie),
-  x: 25,
+  x: 26,
   y: 4,
   i: -1
 }, 1000, 0.9, entity => {
-  state.entities.push(entity);
+  state.entities.add(entity);
 }).forever();
 
 const rightSpawn = Spawner({
   generateEntity: Entity.oneOf(Human, Zombie),
-  x: 1,
+  x: 0,
   y: 4,
   i: 1
 }, 1000, 0.9, entity => {
-  state.entities.push(entity);
+  state.entities.add(entity);
 }).forever();
 
 function update() {
 
   if(state.zombiesTaken >= initialZombieLimit - (state.currentLevel * 2)) {
     //show level failure dialogue
-  } else if(state.humansSaved >= intialHumanTarget + (state.currentLevel * 5)) {
+  } else if(state.humansSaved >= intialHumanTarget + (state.currentLevel * 20)) {
     //show next level dialogue when we get here
     state.currentLevel ++;
-    state.entities = [];
-    state.points = 0;
+    state.entities.clear();
+    //state.points = 0;
   }
 
   // update bridge state based on controls
@@ -102,7 +102,9 @@ function update() {
 
     const tileBehind = tiles[map[tx][ty]];
 
-    if(tileBehind.isLiquid && !entity.drowned) {
+    if(tileBehind.isLiquid) {
+      // move to drowned canvas
+      //state.entities.delete(entity);
       entity.drowned = true;
       // kill movement in both directions to prevent horizontal
       // landing on the wall bugs
@@ -113,16 +115,19 @@ function update() {
     if(tileBehind.isLadder && !entity.isSafe) {
       if(entity.name != 'Zombie') {
         state.humansSaved += 1;
+
         if('item' in entity) {
           entity.item.apply(entity, state);
-          state.texts.push(FloatingText(entity.item.name,
+          state.texts.add(FloatingText(entity.item.name,
               entity.x, 2, 70, 'cyan'));
-          state.texts.push(FloatingText(entity.item.description,
+          state.texts.add(FloatingText(entity.item.description,
               entity.x, 3.5, 30, 'white'));
         }
       } else{
         state.zombiesTaken += 1;
       }
+
+      state.entities.delete(entity);
 
       entity.isSafe = true;
 
@@ -131,7 +136,8 @@ function update() {
 
       const color = points >= 0 ? '#c6db06' : 'red';
       const num = Math.abs(points);
-      state.texts.push(FloatingText(`$${num}`, entity.x, entity.y, 50, color));
+      const sign = points >= 0 ? '+' : '-';
+      state.texts.add(FloatingText(`${sign}$${num}`, entity.x, entity.y, 50, color));
     }
 
     const tileBelow = tiles[map[tx][ty + 1]];
