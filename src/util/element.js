@@ -8,6 +8,10 @@ export default function Element(name, attrs={}, children=[]) {
     element.setAttribute(key, attr);
   });
 
+  if(!(children instanceof Array)) {
+    children = [children];
+  }
+
   children.forEach(child => {
     if(!(child instanceof HTMLElement)) {
       child = document.createTextNode(child);
@@ -28,6 +32,16 @@ export default function Element(name, attrs={}, children=[]) {
 Element.partial = function partial(...args) {
   return function(...rest) {
     return Element(...args, ...rest);
+  };
+};
+
+Element.createStyles = function createStyles(styles) {
+  const ruleNames = Object.keys(styles);
+
+  return function(element) {
+    ruleNames.forEach(name => {
+      element.style[name] = styles[name];
+    });
   };
 };
 

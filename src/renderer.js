@@ -4,6 +4,7 @@ import tiletypes from './constants/tiles';
 
 import status from './ui/status';
 import menu from './ui/menu';
+import stats from './ui/stats';
 
 const spritesheet = new Image();
 spritesheet.src = 'assets/sprites.png';
@@ -34,6 +35,7 @@ export default function Renderer(width, height, tilesize, getElement) {
   container.appendChild(fg.canvas);
 
   container.appendChild(status.create());
+  container.appendChild(stats.create());
   // menu isn't working
   //container.appendChild(menu.create());
 
@@ -52,17 +54,14 @@ export default function Renderer(width, height, tilesize, getElement) {
     const sx = x * ts;
     const sy = y * ts;
 
-    return function(c, x, y, dingosAteMyBaby) {
+    return function(c, x, y, rotation) {
       const dx = x * ts;
       const dy = y * ts;
 
       c.save();
 
       c.translate(dx, dy);
-
-      if(dingosAteMyBaby) {
-        c.scale(1, -1);
-      }
+      c.rotate(rotation);
 
       c.drawImage(spritesheet,
           sx, sy, ts, ts,
@@ -100,19 +99,16 @@ export default function Renderer(width, height, tilesize, getElement) {
         animPos = entity.animation.displaceSprite(entity.x, entity.y);
       }
 
-
       drawSprite(entity.sprite.x, entity.sprite.y)
-        (c, animPos.x, animPos.y, entity.falling);
+        (c, animPos.x, animPos.y, entity.rotation);
 
       if('item' in entity) {
         drawSprite(entity.item.sprite.x, entity.item.sprite.y)
-          (c, animPos.x + 0.3, animPos.y - 0.3, entity.falling);
+          (c, animPos.x + 0.3, animPos.y - 0.3, entity.rotation);
       }
     });
 
     state.texts.forEach(text => {
-      if(text.dead) return;
-
       c.font = `${text.size}px Purisa`;
       c.textAlign = 'center';
       c.lineColor = 'black';
@@ -122,7 +118,7 @@ export default function Renderer(width, height, tilesize, getElement) {
       text.age -= 1;
 
       if(text.age <= 0) {
-        text.dead = true;
+        state.texts.delete(text);
       }
     });
   }
@@ -150,6 +146,7 @@ export default function Renderer(width, height, tilesize, getElement) {
     background(state);
     foreground(state);
     status.update(state);
+    stats.update(state);
   };
 }
 

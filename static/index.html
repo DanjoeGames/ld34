@@ -12,6 +12,28 @@
       font-family: 'Purisa', cursive;
     }
 
+    .stats {
+      text-align: left;
+      margin: 0 auto;
+    }
+
+    .stat {
+      display: inline-block;
+      width: 30%;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .stat .sprite {
+      display: inline-block;
+    }
+
+    .stat__value {
+      font-size: 2em;
+      position: relative;
+      top: -.5em;
+    }
+
     .dialogue {
       position: relative;
       margin: 0 auto;
@@ -24,7 +46,7 @@
       padding: 2em;
     }
 
-    .menu__item__button {
+    .menu__item__button, .dialogue__button {
       background: #fff;
       padding: 1em 2em;
       font-family: inherit;

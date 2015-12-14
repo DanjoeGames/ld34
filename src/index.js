@@ -10,11 +10,14 @@ import Entity from './entities';
 import Bridge from './bridge';
 import { FloatingText } from './text';
 import KeyboardState from './input';
+import chance from './util/chance';
+import Multiplier from './multiplier';
+import Statistics from './statistics';
+import Level from './level';
 
 const tilesize = 50;
 const width = map.length * tilesize;
 const height = map[0].length * tilesize;
-
 
 const initialZombieLimit = 20;
 const intialHumanTarget = 30;
@@ -35,44 +38,64 @@ const rightBridge = Bridge(4, 16, 5, { extends: 'right' });
 // Keep all game data in a single state container so that we can just
 // pass one thing to render
 const state = {
-  entities: [],
+  paused: false,
+  entities: new Set(),
   bridges: [leftBridge, rightBridge],
-  texts: [],
-  scoreMultipliers: [],
+  texts: new Set(),
+  scoreMultipliers: Multiplier(),
+  statistics: Statistics(),
+  showStats: false,
   map,
   points: 0,
-  currentLevel: 0,
+  level: Level(0),
   humansSaved: 0,
   zombiesTaken: 0
 };
 
 const leftSpawn = Spawner({
   generateEntity: Entity.oneOf(Human, Zombie),
-  x: 25,
+  x: 26,
   y: 4,
   i: -1
 }, 1000, 0.9, entity => {
-  state.entities.push(entity);
+  state.entities.add(entity);
 }).forever();
 
 const rightSpawn = Spawner({
   generateEntity: Entity.oneOf(Human, Zombie),
-  x: 1,
+  x: 0,
   y: 4,
   i: 1
 }, 1000, 0.9, entity => {
-  state.entities.push(entity);
+  state.entities.add(entity);
 }).forever();
 
 function update() {
 
-  if(state.zombiesTaken >= initialZombieLimit - (state.currentLevel * 2)) {
+  console.log(state.humansSaved >= state.level.humanTarget);
+  if(state.zombiesTaken >= state.level.zombieLimit) {
     //show level failure dialogue
-  } else if(state.humansSaved >= intialHumanTarget + (state.currentLevel * 5)) {
+  }
+  if(state.humansSaved >= state.level.humanTarget) {
     //show next level dialogue when we get here
-    state.currentLevel ++;
-    state.entities = [];
-    state.points = 0;
+    //
+
+    // reset all entities
+    state.entities.clear();
+
+    // reset stats
+    state.statistics = Statistics();
+
+    // advance to next level
+    state.level = state.level.next();
+    console.log(state.level);
+
+    state.showStats = true;
+    state.paused = true;
+
+    // reset goals
+    state.humansSaved = 0;
+    state.zombiesTaken = 0;
   }
 
   // update bridge state based on controls
@@ -100,45 +123,62 @@ function update() {
 
     const tileBehind = tiles[map[tx][ty]];
 
-    if(tileBehind.isLiquid && !entity.drowned) {
+    if(tileBehind.isLiquid) {
+      // move to drowned canvas
+      //state.entities.delete(entity);
       entity.drowned = true;
       // kill movement in both directions to prevent horizontal
       // landing on the wall bugs
       entity.j = 0;
       entity.i = 0;
+
+      state.statistics.died.inc(entity.type);
     }
 
     if(tileBehind.isLadder && !entity.isSafe) {
+      state.statistics.saved.inc(entity.type);
+
       if(entity.name != 'Zombie') {
         state.humansSaved += 1;
+
         if('item' in entity) {
           entity.item.apply(entity, state);
-          state.texts.push(FloatingText(entity.item.name,
+          state.texts.add(FloatingText(entity.item.name,
               entity.x, 2, 70, 'cyan'));
-          state.texts.push(FloatingText(entity.item.description,
+          state.texts.add(FloatingText(entity.item.description,
               entity.x, 3.5, 30, 'white'));
         }
       } else{
         state.zombiesTaken += 1;
       }
 
-      entity.isSafe = true;
+      // remove entity from game
+      state.entities.delete(entity);
 
-      state.points += entity.points;
-      const color = entity.points >= 0 ? '#c6db06' : 'red';
-      const num = Math.abs(entity.points);
-      state.texts.push(FloatingText(`$${entity.points}`,
-              entity.x, entity.y, 50, color));
+      // apply score taking multipliers into account
+      const points = entity.points * state.scoreMultipliers.multiplier();
+      state.points += points;
+
+      // show some text to represent the score
+      const color = points >= 0 ? '#c6db06' : 'red';
+      const num = Math.abs(points);
+      const sign = points >= 0 ? '+' : '-';
+      state.texts.add(FloatingText(`${sign}$${num}`, entity.x, entity.y, 50, color));
     }
 
     const tileBelow = tiles[map[tx][ty + 1]];
+
     if(tileBelow.solid) {
       entity.j = 0;
-      entity.falling = false;
     } else {
-      entity.falling = true;
+      // add an initial fall rotation
+      if(entity.rotation === 0) {
+        entity.rotation = chance(0.5) ? Math.random() / 10 : -Math.random() / 10;
+      }
+
       entity.j += 0.1;
       entity.i = 0;
+      entity.rotation *= 1.3;
     }
 
     // apply movement - could be moved t prototype
@@ -149,8 +189,10 @@ function update() {
 
 function animate() {
   setTimeout(animate, 50);
-  update();
-  render(state);
+  if(!state.paused) {
+    update();
+    render(state);
+  }
 }
 
 animate();
