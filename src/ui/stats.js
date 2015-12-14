@@ -16,7 +16,9 @@ export default Container(function() {
     return div({ class: 'menu__item' }, btn);
   }
 
+  // button that advances the screen
   const nextButton = makeButton('Next >');
+
 
   const humanTypes = Object.keys(humans);
 

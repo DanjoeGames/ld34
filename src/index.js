@@ -75,6 +75,8 @@ function update() {
   console.log(state.humansSaved >= state.level.humanTarget);
   if(state.zombiesTaken >= state.level.zombieLimit) {
     //show level failure dialogue
+    state.level = Level(0);
+    console.log(state.level);
   }
   if(state.humansSaved >= state.level.humanTarget) {
     //show next level dialogue when we get here
@@ -88,7 +90,6 @@ function update() {
 
     // advance to next level
     state.level = state.level.next();
-    console.log(state.level);
 
     state.showStats = true;
     state.paused = true;
@@ -144,7 +145,7 @@ function update() {
         if('item' in entity) {
           entity.item.apply(entity, state);
           state.texts.add(FloatingText(entity.item.name,
-              entity.x, 2, 70, 'cyan'));
+              entity.x, 2, 70, entity.item.color || 'cyan'));
           state.texts.add(FloatingText(entity.item.description,
               entity.x, 3.5, 30, 'white'));
         }
