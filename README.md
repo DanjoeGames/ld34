@@ -1,5 +1,7 @@
 # LD34
 
+[![Build Status](https://travis-ci.org/DanjoeGames/ld34.svg)](https://travis-ci.org/DanjoeGames/ld34)
+
 ## Structure
 * Everything in the `static` folder will be copied into `build`.
 * Code in `src/` will be compiled into `build/bundle.js`.
