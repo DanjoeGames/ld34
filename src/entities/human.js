@@ -49,7 +49,9 @@ export default function(x, y, i, j) {
     }
   };
 
-  human.item = randomProperty(items);
+  if(Math.random() > 0.9) {
+    human.item = randomProperty(items);
+  }
 
   return human;
 };

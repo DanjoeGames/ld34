@@ -9,7 +9,7 @@ export default {
     color: '#0678c5',
     description: '2x multiplier',
     apply: function(player, state) {
-      state.scoreMultipliers.apply(2, 10000);
+      state.scoreMultipliers.apply(2, 60000);
     }
   },
   redbull: {

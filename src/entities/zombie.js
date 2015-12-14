@@ -13,7 +13,6 @@ export default function(x, y, i=0, j=0) {
   zombie.i = i;
   zombie.j = j;
   zombie.speed = 0.05;
-  zombie.itemName = "NoItem";
   zombie.rotation = 0;
 
   zombie.animation = {
