@@ -116,6 +116,14 @@ export default {
         }
       });
     }
+  },
+  jetpack: {
+    sprite: defineSprite(5, 4),
+    name: 'Jetpack',
+    color: 'green',
+    description: 'Going up!',
+    apply: function(player, state) {
+    }
   }
 }
 
