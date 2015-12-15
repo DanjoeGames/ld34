@@ -1,7 +1,8 @@
 import Improvise from 'improvise';
+import items from './items';
 
 const grammar = Improvise.grammar({
-  noun: ['bridge', 'zombie'],
+  noun: ['bridge', 'zombie', ...Object.keys(items)],
   adjective: ['wonder', 'great', 'super', 'extra'],
   very: ['very', 'quite', 'slightly'],
   bad: ['cheap', 'shit', 'naff', 'lame', 'crap', 'horrible'],
@@ -10,23 +11,19 @@ const grammar = Improvise.grammar({
   number: ['five', 'six', 'three', 'two'],
   difficulty: ['easy', 'tough', 'really difficult'],
   mate: ['friend', 'mate', 'dude', 'guys', 'bro'],
-  L: ['Lonely', 'Larry', 'Llama', 'Lite', 'Little'],
   megainsult: '{{adjective}}{{insult}}',
   doubleinsult: '{{insult}}{{insult}}',
   insult: ['{{megainsult}}', 'muppet', 'knob', 'spanner', 'cretin',
-           'pancake', 'bitch', 'twat', 'dick', 'idiot'],
+           'pancake', 'bitch', 'twat', 'dick', 'idiot', 'twerp'],
   snow: [
-    'You know nothing, Jon Snow',
-    'I am the watcher on the {{noun}}'
+    'You know nothing, Jon Snow'
   ],
   jules: [
     'Does he look like a {{insult}} to you?',
     'This was divine intervention!',
     'English, {{doubleinsult}}. Do you speak it?',
     'I\'ve had it with these {{noun}}s on this {{noun}}!',
-    'Samuel \'{{L}}\' Jackson',
-    'The L stands for {{L}}',
-    'The path of the righteous man is beset on all sides'
+    'The path of the righteous man is beset on all sides...'
   ],
   jesus: [
     'My side hurts.',
@@ -50,9 +47,8 @@ const grammar = Improvise.grammar({
   shrek: [
     'This is my swamp!',
     'Fairytale {{insult}}s in my swamp!',
-    'That\'l do donkey, you {{insult}}!',
-    'Ogres are like onions',
-    'All my quotes are {{bad}}'
+    'That\'ll do donkey, you {{insult}}!',
+    'Ogres are like onions'
   ]
 });
 
