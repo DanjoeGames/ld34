@@ -1,43 +1,54 @@
 import Improvise from 'improvise';
+import items from './items';
 
 const grammar = Improvise.grammar({
-  noun: ['bridge', 'zombie'],
-  adjectives: ['wonderful', 'great', 'super'],
-  super: ['Super', 'Mega', 'Wonder', 'Cheese', 'Grand', 'GNU / '],
+  noun: ['bridge', 'zombie', ...Object.keys(items)],
+  adjective: ['wonder', 'great', 'super', 'extra'],
+  very: ['very', 'quite', 'slightly'],
+  bad: ['cheap', 'shit', 'naff', 'lame', 'crap', 'horrible'],
+  super: ['super', 'mega', 'wonder', 'macho', 'grand', 'GNU / ', 'fucking', 'bloody'],
+  alcohol: ['WKD', 'Vodka', 'Jager', 'Absinthe'],
+  number: ['five', 'six', 'three', 'two'],
   difficulty: ['easy', 'tough', 'really difficult'],
   mate: ['friend', 'mate', 'dude', 'guys', 'bro'],
-  L: ['Lonely', 'Lovely', 'Llama', 'Lite'],
-  insult: ['muppet', 'twonk', 'spanner', 'pancake', 'bitch'],
+  megainsult: '{{adjective}}{{insult}}',
+  doubleinsult: '{{insult}}{{insult}}',
+  insult: ['{{megainsult}}', 'muppet', 'knob', 'spanner', 'cretin',
+           'pancake', 'bitch', 'twat', 'dick', 'idiot', 'twerp'],
   snow: [
-    'You know nothing, Jon {{noun}}',
-    'I am the watcher on the {{noun}}'
+    'You know nothing, Jon Snow'
   ],
   jules: [
     'Does he look like a {{insult}} to you?',
     'This was divine intervention!',
-    'English, motherf*cker. Do you speak it?',
-    'I\'ve had it with these {{noun}} on this {{noun}}!',
-    'That\'s Samuel {{L}} Jackson, to you!'
+    'English, {{doubleinsult}}. Do you speak it?',
+    'I\'ve had it with these {{noun}}s on this {{noun}}!',
+    'The path of the righteous man is beset on all sides...'
   ],
   jesus: [
     'My side hurts.',
-    'Holy {{noun}}s!',
+    'The romans are {{insult}}s',
     'Look busy {{mate}}!',
+    'I do {{difficulty}} miracles, {{insult}}',
     'I\'m literally {{super}} Jesus',
+    'I turn water into {{alcohol}}!',
+    'Judas is a {{insult}}',
+    'He\'s not the messiah!'
   ],
   gandalf: [
     'Fly you fools!',
+    'Fly you {{insult}}s!',
     'A wizard is never late.',
     'Fool of a {{noun}}!',
-    'I\'m a tired developer',
-    'Peregrin Took, you {{insult}}!'
+    'Peregrin Took, you {{insult}}!',
+    'Throw yourself in next time, you {{insult}}',
+    'I\'m not a conjurer of {{bad}} tricks!'
   ],
-  jones: [
-    'I hate snakes!',
-    'It belongs in a museum you {{insult}}!',
-    'Why\'d it have to be {{noun}}s?',
-    '{{noun}}s belongs in a museum!',
-    'Thinking up quotes is hard'
+  shrek: [
+    'This is my swamp!',
+    'Fairytale {{insult}}s in my swamp!',
+    'That\'ll do donkey, you {{insult}}!',
+    'Ogres are like onions'
   ]
 });
 

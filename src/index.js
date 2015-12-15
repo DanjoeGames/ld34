@@ -56,6 +56,7 @@ const leftSpawn = Spawner({
   i: -1
 }, 1000, 0.9, entity => {
   if(entity.level <= state.level.number) {
+    entity.speed *= (1 + (state.level.number / 5));
     state.entities.add(entity);
   }
 });
@@ -67,6 +68,7 @@ const rightSpawn = Spawner({
   i: 1
 }, 1000, 0.9, entity => {
   if(entity.level <= state.level.number) {
+    entity.speed *= (1 + (state.level.number / 5));
     state.entities.add(entity);
   }
 });
@@ -178,7 +180,7 @@ function update() {
       state.texts.add(FloatingText(`${sign}$${num}`, entity.x, entity.y + 1, 50, color));
 
       if('specialText' in entity) {
-        state.texts.add(FloatingText(entity.specialText(), entity.x, entity.y, 30, 'white'));
+        state.texts.add(FloatingText(entity.specialText(), entity.x, entity.y - 1, 35, 'cyan'));
       }
     }
 
