@@ -56,6 +56,7 @@ const leftSpawn = Spawner({
   i: -1
 }, 1000, 0.9, entity => {
   if(entity.level <= state.level.number) {
+    entity.speed *= (1 + (state.level.number / 5));
     state.entities.add(entity);
   }
 });
@@ -67,6 +68,7 @@ const rightSpawn = Spawner({
   i: 1
 }, 1000, 0.9, entity => {
   if(entity.level <= state.level.number) {
+    entity.speed *= (1 + (state.level.number / 5));
     state.entities.add(entity);
   }
 });

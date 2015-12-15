@@ -47,11 +47,11 @@ const grammar = Improvise.grammar({
     'Throw yourself in next time, you {{insult}}',
     'I\'m not a conjurer of {{bad}} tricks!'
   ],
-  jones: [
-    'I hate snakes!',
-    'It belongs in a museum you {{insult}}!',
-    'Why\'d it have to be {{noun}}s?',
-    '{{noun}}s belongs in a museum!',
+  shrek: [
+    'This is my swamp!',
+    'Fairytale {{insult}}s in my swamp!',
+    'That\'l do donkey, you {{insult}}!',
+    'Ogres are like onions',
     'All my quotes are {{bad}}'
   ]
 });
