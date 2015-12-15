@@ -1,5 +1,5 @@
 // es6 polyfill for older browsers
-import 'core-js';
+import 'babel-polyfill';
 
 import tiletypes from './constants/tiles';
 import controls from './constants/controls';
